@@ -3,7 +3,6 @@ const removeFromList = (index: number, list: any[]) => {
 }
 
 const readFromFile = (filepath: string) => {
-    console.log(window.require)
     if (window && window.require) {
         const fs = window.require("fs");
         return fs.readFileSync(filepath, "utf8");

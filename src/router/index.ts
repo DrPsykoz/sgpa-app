@@ -1,24 +1,21 @@
 import Vue from "vue";
 import VueRouter, { RouteConfig } from "vue-router";
-import Home from "../views/Home.vue";
+
+import Classes from '../views/Classes.vue'
+import Evaluation from '../views/Evaluation.vue'
+import GestionDomaines from '../views/GestionDomaines.vue';
+import Bilan from "../views/Bilan.vue";
+import BilanAnnuel from "../views/BilanAnnuel.vue"
 
 Vue.use(VueRouter);
 
 const routes: Array<RouteConfig> = [
-  {
-    path: "/",
-    name: "Home",
-    component: Home,
-  },
-  {
-    path: "/about",
-    name: "About",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/About.vue"),
-  },
+  { path: '/', component: Classes },
+  { path: '/classes', component: Classes },
+  { path: '/gestion_domaines', component: GestionDomaines },
+  { path: '/evaluations/:classe/:id', component: Evaluation },
+  { path: '/bilan/:classe/:trimestre/:annee', component: Bilan },
+  { path: '/bilan_annuel/:classe/:annee', component: BilanAnnuel },
 ];
 
 const router = new VueRouter({

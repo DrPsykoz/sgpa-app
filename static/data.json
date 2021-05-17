@@ -1,200 +1,29 @@
 {
     "classes": [
         {
-            "id": 1,
-            "name": "Annee 2019 - 2021",
-            "eleves": [
-                {
-                    "id": 0,
-                    "name": "Freville",
-                    "surname": "Theo"
-                },
-                {
-                    "id": 1,
-                    "name": "Ledoux",
-                    "surname": "Coraly"
-                }
-            ],
-            "evaluations": [
-                {
-                    "id": 0,
-                    "trimestre": "1er trimestre",
-                    "annee": "4eme",
-                    "competences": [
-                        {
-                            "cycleID": 1,
-                            "domaineID": 1,
-                            "champID": 1,
-                            "competence": {
-                                "id": 7,
-                                "name": "comprendre des textes, des documents et des images pour les interpréter."
-                            }
-                        }
-                    ],
-                    "notes": [
-                        {
-                            "eleveID": 0,
-                            "compObj": {
-                                "cycleID": 1,
-                                "domaineID": 1,
-                                "champID": 1,
-                                "competence": {
-                                    "id": 7,
-                                    "name": "comprendre des textes, des documents et des images pour les interpréter."
-                                }
-                            },
-                            "note": 1
-                        },
-                        {
-                            "eleveID": 1,
-                            "compObj": {
-                                "cycleID": 1,
-                                "domaineID": 1,
-                                "champID": 1,
-                                "competence": {
-                                    "id": 7,
-                                    "name": "comprendre des textes, des documents et des images pour les interpréter."
-                                }
-                            },
-                            "note": 5
-                        }
-                    ]
-                },
-                {
-                    "id": 1,
-                    "trimestre": "2eme trimestre",
-                    "annee": "4eme",
-                    "competences": [
-                        {
-                            "cycleID": 1,
-                            "domaineID": 1,
-                            "champID": 1,
-                            "competence": {
-                                "id": 7,
-                                "name": "comprendre des textes, des documents et des images pour les interpréter."
-                            }
-                        }
-                    ],
-                    "notes": [
-                        {
-                            "eleveID": 0,
-                            "compObj": {
-                                "cycleID": 1,
-                                "domaineID": 1,
-                                "champID": 1,
-                                "competence": {
-                                    "id": 7,
-                                    "name": "comprendre des textes, des documents et des images pour les interpréter."
-                                }
-                            },
-                            "note": 3
-                        },
-                        {
-                            "eleveID": 1,
-                            "compObj": {
-                                "cycleID": 1,
-                                "domaineID": 1,
-                                "champID": 1,
-                                "competence": {
-                                    "id": 7,
-                                    "name": "comprendre des textes, des documents et des images pour les interpréter."
-                                }
-                            },
-                            "note": 3
-                        }
-                    ]
-                }
-            ]
+            "id": "861b30ba-efee-4146-89ae-c756a54dfce6",
+            "name": "ddqzdzdqzdqz",
+            "eleves": [],
+            "evaluations": []
         },
         {
-            "id": 2,
+            "id": "b3b3984f-5ca9-4c24-af19-7954db5e23fc",
+            "name": "Ndzqzdzd",
             "eleves": [],
-            "name": "Annee 2020 - 2022",
+            "evaluations": []
+        },
+        {
+            "id": "c391c717-fee9-42c4-803e-3032d57bb47f",
+            "name": "dqzdzdz",
+            "eleves": [],
+            "evaluations": []
+        },
+        {
+            "id": "c3abe77f-f59b-48f2-89fa-7ca69fa34aba",
+            "name": "dqzdzdzd",
+            "eleves": [],
             "evaluations": []
         }
     ],
-    "cycles": [
-        {
-            "id": 1,
-            "name": "Cycle 3",
-            "domaines": [
-                {
-                    "id": 1,
-                    "name": "Domaine 1: Les langages pour penser et communiquer",
-                    "champs": [
-                        {
-                            "id": 1,
-                            "name": "Comprendre, s’exprimer en utilisant la langue française à l’oral et à l’écrit",
-                            "competences": [
-                                {
-                                    "id": 7,
-                                    "name": "comprendre des textes, des documents et des images pour les interpréter."
-                                },
-                                {
-                                    "id": 8,
-                                    "name": "écrire a la main de manière fluide et efficace"
-                                },
-                                {
-                                    "id": 9,
-                                    "name": "parler en prenant compte son auditoire"
-                                }
-                            ]
-                        },
-                        {
-                            "id": 3,
-                            "name": "Comprendre, s’exprimer en utilisant les langages mathématiques, scientifiques , informatiques",
-                            "competences": [
-                                {
-                                    "id": 0,
-                                    "name": "analyser une figure plane sous différents aspects (surface, contour de celle-ci, lignes et points)"
-                                },
-                                {
-                                    "id": 1,
-                                    "name": "Reconnaître et utiliser des premiers éléments de codages d'une figure plane ou d'un solide"
-                                },
-                                {
-                                    "id": 2,
-                                    "name": "utiliser des propriétés géométriques pour reconnaître des objets"
-                                },
-                                {
-                                    "id": 3,
-                                    "name": "produire et utiliser diverses représentations des fractions simples et des nombres décimaux"
-                                },
-                                {
-                                    "id": 4,
-                                    "name": "contrôler le vraisemblance de ses résultats"
-                                },
-                                {
-                                    "id": 5,
-                                    "name": "utiliser une calculatrice pour trouver un résultat ou le vérifier"
-                                },
-                                {
-                                    "id": 6,
-                                    "name": "utiliser progressivement  un vocabulaire adéquat et/ou des notations adaptées pour décrire une situation, exposer une argumentation."
-                                }
-                            ]
-                        },
-                        {
-                            "id": 4,
-                            "name": "Comprendre, s’exprimer en utilisant les langages des arts et du corps",
-                            "competences": [
-                                {
-                                    "id": 0,
-                                    "name": "S'exprimer par des activités physiques, sportives ou artistiques"
-                                },
-                                {
-                                    "id": 1,
-                                    "name": "Pratiquer les arts en mobilisant divers langages artistiques et leurs ressources"
-                                },
-                                {
-                                    "id": 2,
-                                    "name": "Prendre du recul sur la pratique artistique, individuelle et collective"
-                                }
-                            ]
-                        }
-                    ]
-                }
-            ]
-        }
-    ]
+    "cycles": []
 }

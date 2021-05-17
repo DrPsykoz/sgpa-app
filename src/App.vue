@@ -38,7 +38,6 @@
       >
         Sauvegarde effectuée
       </v-alert>
-      {{ data }}
       <router-view v-if="data != undefined" :data="data" />
     </v-main>
   </v-app>
