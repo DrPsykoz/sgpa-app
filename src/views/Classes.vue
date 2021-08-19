@@ -143,244 +143,25 @@
     </v-container>
 
     <!-- Eleves -->
-    <v-container
-      v-if="current_classe !== null"
-      class="secondary mt-5 white--text pb-1"
-    >
-      <v-container class="d-flex pa-0 justify-space-between">
-        <h2 class="mb-2 ml-1" style="font-weight: 700; letter-spacing: 1px">
-          ELEVES
-        </h2>
-        <div>
-          <DialogAjoutEleve
-            :classe="current_classe"
-            :buttonClass="'green rounded-0'"
-          />
-          <v-btn
-            class="rounded-0 ml-3"
-            color="white"
-            @click="display.eleves = !display.eleves"
-          >
-            <v-icon medium color="secondary" v-if="display.eleves">
-              mdi-eye
-            </v-icon>
-            <v-icon medium color="secondary" v-else> mdi-eye-off </v-icon>
-          </v-btn>
-        </div>
-      </v-container>
-      <v-data-table
-        :headers="headers"
-        :items="current_classe.eleves"
-        :items-per-page="-1"
-        class="elevation-1 rounded-0 mb-2 mt-1"
-        v-if="display.eleves"
-      >
-        <template v-slot:item="{ item }">
-          <tr>
-            <td>
-              {{ item.first_name }}
-            </td>
-            <td>{{ item.last_name }}sssdzqdqzd</td>
-            <td>
-              <v-chip
-                style="font-weight: 500"
-                class="ma-2"
-                :color="getNote(getMoyenne(5)).color"
-              >
-                {{ getNote(getMoyenne(5)).name }}
-              </v-chip>
-            </td>
-            <td>
-              <v-btn
-                text
-                class="red--text ml-2 rounded-0"
-                @click="removeEleve(item)"
-              >
-                Supprimer
-              </v-btn>
-            </td>
-          </tr>
-        </template>
-      </v-data-table>
-    </v-container>
+    <ElevesList :classe="current_classe" />
 
     <!-- Evaluations -->
-    <v-container
-      v-if="current_classe !== null"
-      class="secondary mt-5 white--text pb-1"
-    >
-      <v-container class="d-flex pa-0 justify-space-between">
-        <h2 class="mb-2 ml-1" style="font-weight: 700; letter-spacing: 1px">
-          EVALUATIONS
-        </h2>
-        <div>
-          <DialogAjoutEvaluation
-            :classe="current_classe"
-            :cycles="cycles"
-            :buttonClass="'green rounded-0'"
-          />
-          <v-btn
-            class="rounded-0 ml-3"
-            color="white"
-            @click="display.evaluations = !display.evaluations"
-          >
-            <v-icon medium color="secondary" v-if="display.evaluations">
-              mdi-eye
-            </v-icon>
-            <v-icon medium color="secondary" v-else> mdi-eye-off </v-icon>
-          </v-btn>
-        </div>
-      </v-container>
-      <v-data-table
-        :headers="headersEvalutations"
-        :items="current_classe.evaluations"
-        :items-per-page="-1"
-        class="elevation-1 rounded-0 mt-1 mb-2"
-        v-if="display.evaluations"
-      >
-        <template v-slot:item="{ item }">
-          <tr>
-            <td>
-              {{ item.annee }}
-            </td>
-            <td>{{ item.trimestre }}</td>
-            <td>
-              <ul>
-                <li v-for="comp in item.competences" :key="comp.id">
-                  {{ comp.competence.name }}
-                </li>
-              </ul>
-            </td>
-            <td>
-              <v-container class="d-flex pa-0">
-                <v-btn
-                  text
-                  class="green--text ml-2 rounded-0"
-                  :to="
-                    '/evaluations/' +
-                    classes.indexOf(current_classe) +
-                    '/' +
-                    current_classe.evaluations.indexOf(item)
-                  "
-                  >Noter</v-btn
-                >
-                <DialogAjoutEvaluation
-                  :editEvaluation="item"
-                  :classe="current_classe"
-                  :cycles="cycles"
-                  :buttonText="'Modifier'"
-                  :buttonClass="'black--text ml-2 rounded-0'"
-                  :isTextButton="true"
-                />
-                <btn-remove-list
-                  :index="current_classe.evaluations.indexOf(item)"
-                  :list="current_classe.evaluations"
-                />
-              </v-container>
-            </td>
-          </tr>
-        </template>
-      </v-data-table>
-    </v-container>
+    <EvaluationsList :classe="current_classe" />
 
     <!-- Seances -->
-    <v-container
-      v-if="current_classe !== null"
-      class="secondary mt-5 white--text pb-1"
-    >
-      <v-container class="d-flex pa-0 justify-space-between">
-        <h2 class="mb-2 ml-1" style="font-weight: 700; letter-spacing: 1px">
-          SEANCES
-        </h2>
-        <div class="d-flex">
-          <!-- <DialogAjout
-            v-model="current_classe.seances"
-            :dataModel="{
-              id: getNextID(current_classe.seances),
-              date_debut: new Date(),
-              date_fin: new Date(),
-            }"
-            :classe="current_classe"
-            :cycles="cycles"
-            :buttonClass="'green rounded-0 white--text'"
-            :title="'Nouvelle seance'"
-          /> -->
-          <v-btn
-            class="rounded-0 ml-3"
-            color="white"
-            @click="display.seances = !display.seances"
-          >
-            <v-icon medium color="secondary" v-if="display.seances">
-              mdi-eye
-            </v-icon>
-            <v-icon medium color="secondary" v-else> mdi-eye-off </v-icon>
-          </v-btn>
-        </div>
-      </v-container>
-      <v-data-table
-        :headers="headersSceances"
-        :items="current_classe.seances"
-        :items-per-page="-1"
-        class="elevation-1 rounded-0 mt-1 mb-2"
-        v-if="display.seances"
-      >
-        <template v-slot:item="{ item }">
-          <tr>
-            {{
-              item
-            }}
-            <td>
-              {{ item.date_debut.toLocaleString("fr-FR") }}
-            </td>
-            <td>
-              {{ item.date_fin.toLocaleString("fr-FR") }}
-            </td>
-            <td>
-              <DialogAjoutEvaluation
-                :editEvaluation="item"
-                :classe="current_classe"
-                :cycles="cycles"
-                :buttonText="'Modifier'"
-                :buttonClass="'black--text ml-2 rounded-0'"
-                :isTextButton="true"
-              />
-              <btn-remove-list
-                :index="current_classe.sceances.indexOf(item)"
-                :list="current_classe.sceances"
-              />
-            </td>
-          </tr>
-        </template>
-      </v-data-table>
-    </v-container>
+    <SeancesList :classe="current_classe" />
 
     <generic-dialog
-      :value="dialogConfirmDeleteClasse"
+      v-model="dialogConfirmDeleteClasse"
       title="Supprimer cette classe ?"
       confirmText="Confirmer"
       :onConfirm="() => confirmDeleteClasse()"
+      cancellable
     >
       <template slot="content">
         <p v-if="classe_to_delete !== null">
           Etes vous sur de vouloir supprimer la classe
           <b>{{ classe_to_delete.name }}</b> ?
-        </p>
-      </template>
-    </generic-dialog>
-
-    <generic-dialog
-      :value="dialogConfirmRemoveEleve"
-      title="Supprimer cet eleve ?"
-      confirmText="Confirmer"
-      :onConfirm="() => confirmRemoveEleve()"
-    >
-      <template slot="content">
-        <p v-if="eleve_to_remove !== null">
-          Etes vous sur de vouloir supprimer l'eleve
-          <b>{{
-            `${eleve_to_remove.first_name} ${eleve_to_remove.last_name}`
-          }}</b>
-          de cette classe ?
         </p>
       </template>
     </generic-dialog>

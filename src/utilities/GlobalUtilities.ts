@@ -10,7 +10,7 @@ const readFromFile = (filepath: string) => {
         console.error(`error while loading file at ${filepath}`)
         return null;
     }
-} 
+}
 
 const writeToFileSync = (filepath: string, content: string) => {
     if (window && window.require) {
@@ -49,27 +49,27 @@ const getNote = (note: number) => {
     }
     switch (note) {
         case 1:
-            noteObj.name = "Maitrise insuffisante";
+            noteObj.name = "Maîtrise insuffisante";
             noteObj.color = "red";
             break;
 
         case 2:
-            noteObj.name = "Maitrise fragile";
+            noteObj.name = "Maîtrise fragile";
             noteObj.color = "orange";
             break;
 
         case 3:
-            noteObj.name = "Presque maitrisé";
+            noteObj.name = "Presque maîtrisé";
             noteObj.color = "yellow";
             break;
 
         case 4:
-            noteObj.name = "Maitrise satisfaisante";
+            noteObj.name = "Maîtrise satisfaisante";
             noteObj.color = "lime";
             break;
 
         case 5:
-            noteObj.name = "Trés bonne maitrise";
+            noteObj.name = "Très bonne maîtrise";
             noteObj.color = "green";
             break;
 
@@ -83,4 +83,5 @@ const isSame = (obj1: any, obj2: any) => {
     return JSON.stringify(obj1) === JSON.stringify(obj2)
 }
 
-export { removeFromList, readFromFile, writeToFileSync, getNextID, getByID, getNote, isSame };
+
+export default { removeFromList, readFromFile, writeToFileSync, getNextID, getByID, getNote, isSame };

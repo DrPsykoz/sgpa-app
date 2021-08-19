@@ -1,11 +1,5 @@
 <template>
-  <v-btn
-    class="ma-0"
-    text
-    icon
-    color="red lighten-2"
-    @click="removeFromList(index, list)"
-  >
+  <v-btn class="ma-0" text icon color="red lighten-2">
     <v-icon>delete</v-icon>
   </v-btn>
 </template>

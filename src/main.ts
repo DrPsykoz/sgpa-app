@@ -13,6 +13,9 @@ import GenericDialog from '@/components/General/GenericDialog.vue';
 
 Vue.component('generic-dialog', GenericDialog);
 
+import ButtonDelete from '@/components/global/buttons/ButtonDelete.vue';
+Vue.component('button-delete', ButtonDelete);
+
 new Vue({
   router,
   store,

@@ -3,4 +3,11 @@ import Vuetify from "vuetify/lib/framework";
 
 Vue.use(Vuetify);
 
-export default new Vuetify({});
+import fr from 'vuetify/src/locale/fr'
+
+export default new Vuetify({
+    lang: {
+        locales: { fr },
+        current: 'fr',
+    }
+});

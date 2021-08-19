@@ -29,15 +29,31 @@
     </v-app-bar>
 
     <v-main>
-      <v-alert
-        style="position: fixed; z-index: 999"
-        class="mt-2 ml-2"
-        type="success"
-        v-if="saveAlert"
-        elevation="10"
-      >
-        Sauvegarde effectuée
-      </v-alert>
+      <div style="position: fixed; z-index: 999">
+        <v-tooltip
+          right
+          v-for="notification in notifications"
+          :key="notification.id"
+        >
+          <template v-slot:activator="{ on, attrs }">
+            <v-alert
+              style="cursor: pointer"
+              class="ma-2 pa-2 d-flex pr-4"
+              :type="`${notification.type}`"
+              elevation="10"
+              dense
+              tooltip="Clique pour retirer cette notification"
+              @click="() => removeNotification(notification)"
+              v-bind="attrs"
+              v-on="on"
+            >
+              <span>{{ notification.text }}</span>
+            </v-alert>
+          </template>
+          <span>Fermer cette notification</span>
+        </v-tooltip>
+      </div>
+
       <router-view v-if="data != undefined" :data="data" />
     </v-main>
   </v-app>

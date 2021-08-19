@@ -6,6 +6,7 @@ import { MainState } from './state';
 const defaultState: MainState = {
   classes: [],
   cycles: [],
+  notifications: [],
 };
 
 export const mainModule = {

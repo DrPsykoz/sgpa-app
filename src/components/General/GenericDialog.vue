@@ -5,7 +5,14 @@
         v-if="title !== undefined"
         class="secondary white--text mb-2 pl-5"
       >
-        <v-toolbar-title>{{ title }}</v-toolbar-title>
+        <v-toolbar-title>
+          <h2
+            class="title"
+            style="font-weight: 700; letter-spacing: 1px !important"
+          >
+            {{ title }}
+          </h2>
+        </v-toolbar-title>
       </v-toolbar>
       <v-card-text style="font-size: 13px; padding-top: 12px">
         <slot name="content"> </slot>
@@ -16,9 +23,9 @@
           <v-btn
             v-if="cancellable"
             class="grey white--text"
-            @click.prevent="onCancel"
+            @click.prevent="cancel"
           >
-            {{ Annuler }}
+            Annuler
           </v-btn>
           <v-btn
             :color="confirmColor || 'secondary'"
@@ -42,9 +49,24 @@ export default {
     onCancel: Function || Promise,
     value: Boolean,
     title: String,
+    hasActivationButton: Boolean,
+  },
+  methods: {
+    cancel() {
+      if (this.onCancel !== undefined) {
+        this.onCancel();
+      } else {
+        this.$emit("input", false);
+      }
+    },
   },
 };
 </script>
 
 <style>
+.title {
+  text-transform: uppercase;
+  font-weight: 100;
+  letter-spacing: 10px;
+}
 </style>

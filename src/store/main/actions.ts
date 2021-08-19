@@ -1,14 +1,34 @@
-import { IClasse, ICycle, IEleve, IEvaluation } from '@/interfaces';
+import { ENotificationType, IChamp, IClasse, ICompetence, ICycle, IDomaine, IEleve, IEvaluation, INotification } from '@/interfaces';
 import { getStoreAccessors } from 'typesafe-vuex';
 import { ActionContext } from 'vuex';
 import { State } from '../state';
-import { commitSetClasse, commitSetCycle, commitSetEleve, commitSetEvaluation } from './mutations';
+import { commitAddNotification, commitClearNotifications, commitRemoveClasse, commitRemoveEleve, commitRemoveEvaluation, commitRemoveNotification, commitSetChamp, commitSetClasse, commitSetCompetence, commitSetCycle, commitSetDomaine, commitSetEleve, commitSetEvaluation } from './mutations';
 import { MainState } from './state';
 import { v4 as uuidv4 } from 'uuid';
+import { readClasse } from './getters';
 
 type MainContext = ActionContext<MainState, State>;
 
 export const actions = {
+    /*
+     *  Notifications
+     */
+    async actionAddNotification(context: MainContext, payload: { notification: INotification }) {
+        commitAddNotification(context, payload);
+        setTimeout(() => {
+            commitRemoveNotification(context, { id: payload.notification.id });
+        }, payload.notification.time * 1000);
+    },
+    async actionRemoveNotification(context: MainContext, payload: { id: any }) {
+        commitRemoveNotification(context, payload);
+    },
+    async actionClearNotifications(context: MainContext) {
+        commitClearNotifications(context);
+    },
+
+    /*
+     *  Classes 
+     */
     async actionCreateClasse(context: MainContext, payload: { name: string }) {
         const classe = {} as IClasse;
         classe.id = uuidv4();
@@ -17,33 +37,94 @@ export const actions = {
         classe.evaluations = [];
         commitSetClasse(context, classe);
     },
-    async actionCreateCycle(context: MainContext, payload: { name: string }) {
-        const cycle = {} as ICycle;
-        cycle.id = uuidv4();
-        cycle.name = payload.name;
-        cycle.domaines = [];
-        commitSetCycle(context, cycle);
+    async actionRemoveClasse(context: MainContext, payload: { id: any }) {
+        const classe = readClasse(context)(payload.id);
+        if (classe) {
+            if (classe.eleves.length > 0) {
+                dispatchAddNotification(context, {
+                    notification: new INotification({
+                        text: 'Impossible de supprimer une classe qui contient encore des eleves.',
+                        type: ENotificationType.ERROR,
+                    })
+                });
+                return;
+            }
+            commitRemoveClasse(context, classe);
+        }
     },
-    async actionCreateEleve(context: MainContext, payload: { classe: IClasse, eleve: IEleve }) {
-        const eleve = { ...payload.eleve };
-        eleve.id = uuidv4();
-        commitSetEleve(context, {
-            classe: payload.classe, eleve
-        });
-    },
+
+    /*
+     *  Evaluations
+     */
     async actionCreateEvaluation(context: MainContext, payload: { classe: IClasse, evaluation: IEvaluation }) {
-        const evaluation = { ...payload.evaluation };
-        evaluation.id = uuidv4();
-        commitSetEvaluation(context, {
-            classe: payload.classe, evaluation
-        });
+        commitSetEvaluation(context, payload);
     },
+    async actionRemoveEvaluation(context: MainContext, payload: { classe: IClasse, evaluation_id: string }) {
+        commitRemoveEvaluation(context, payload);
+    },
+
+    /*
+     *  Eleves
+     */
+    async actionCreateEleve(context: MainContext, payload: { classe: IClasse, eleve: IEleve }) {
+        if (!payload.eleve.first_name || payload.eleve.first_name.length === 0) {
+            dispatchAddNotification(context, {
+                notification: new INotification({ text: 'Impossible de creer un eleve sans prenom.', type: ENotificationType.ERROR }),
+            });
+            return false;
+        }
+        if (!payload.eleve.last_name || payload.eleve.last_name.length === 0) {
+            dispatchAddNotification(context, {
+                notification: new INotification({ text: 'Impossible de creer un eleve sans nom de famille.', type: ENotificationType.ERROR }),
+            });
+            return false;
+        }
+        commitSetEleve(context, payload);
+        return true;
+    },
+    async actionRemoveEleve(context: MainContext, payload: { classe: IClasse, eleve_id: string }) {
+        const result = commitRemoveEleve(context, payload);
+    },
+
+    async actionCreateCycle(context: MainContext, payload: { cycle: ICycle }) {
+        commitSetCycle(context, payload.cycle);
+    },
+    async actionCreateDomaine(context: MainContext, payload: { cycle: ICycle, domaine: IDomaine }) {
+        commitSetDomaine(context, { cycle: payload.cycle, domaine: payload.domaine });
+    },
+    async actionCreateChamp(context: MainContext, payload: { cycle: ICycle, domaine: IDomaine, champ: IChamp }) {
+        commitSetChamp(context, { cycle: payload.cycle, domaine: payload.domaine, champ: payload.champ });
+    },
+    async actionCreateCompetence(context: MainContext, payload: { cycle: ICycle, domaine: IDomaine, champ: IChamp, competence: ICompetence }) {
+        commitSetCompetence(context, { cycle: payload.cycle, domaine: payload.domaine, champ: payload.champ, competence: payload.competence });
+    },
+
+
 };
 
 const { dispatch } = getStoreAccessors<MainState, State>('');
 
-export const dispatchCreateClasse = dispatch(actions.actionCreateClasse);
-export const dispatchCreateCycle = dispatch(actions.actionCreateCycle);
 
+export const dispatchCreateCycle = dispatch(actions.actionCreateCycle);
+export const dispatchCreateDomaine = dispatch(actions.actionCreateDomaine);
+export const dispatchCreateChamp = dispatch(actions.actionCreateChamp);
+export const dispatchCreateCompetence = dispatch(actions.actionCreateCompetence);
+
+
+
+
+// Notifications
+export const dispatchAddNotification = dispatch(actions.actionAddNotification);
+export const dispatchRemoveNotification = dispatch(actions.actionRemoveNotification);
+
+// Classes
+export const dispatchCreateClasse = dispatch(actions.actionCreateClasse);
+export const dispatchRemoveClasse = dispatch(actions.actionRemoveClasse);
+
+// Evaluations
+export const dispatchCreateEvaluation = dispatch(actions.actionCreateEvaluation);
+export const dispatchRemoveEvaluation = dispatch(actions.actionRemoveEvaluation);
+
+// Eleves
 export const dispatchCreateEleve = dispatch(actions.actionCreateEleve);
-export const dispatchCreateEvalutation = dispatch(actions.actionCreateEvaluation);
+export const dispatchRemoveEleve = dispatch(actions.actionRemoveEleve);
