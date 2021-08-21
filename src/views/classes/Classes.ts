@@ -38,11 +38,6 @@ export default class Classes extends Vue {
     return readCycles(this.$store);
   }
 
-  @Watch('current_classe')
-  public onCurrentClasseChange(value, old) {
-    console.log(`${old} => ${value}`);
-  }
-
   public resetCurrent() {
     if (this.classes.length > 0) {
       this.current_classe = this.classes[0];

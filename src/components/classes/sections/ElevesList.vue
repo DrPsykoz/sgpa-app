@@ -11,13 +11,7 @@
           :getNewData="() => getNewEleve()"
           :onConfirm="(data) => createEleve(data)"
           :keysTranslate="keysTranslate"
-        >
-          <template slot="button">
-            <v-btn text class="success">
-              <v-icon>add</v-icon>
-            </v-btn>
-          </template>
-        </DialogItemData>
+        />
         <v-btn
           class="rounded-0 ml-3"
           color="white"

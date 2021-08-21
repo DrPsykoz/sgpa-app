@@ -4,7 +4,7 @@
   <div v-if="classe && evaluation" class="fiche_contrat">
     <v-container
       style="position: relative"
-      class="pb-0 mb-3 d-flex flex-row justify-space-between align-center"
+      class="pb-0 mb-3 pt-0 d-flex flex-row justify-space-between align-center"
     >
       <v-btn
         class="rounded-0 no-print"

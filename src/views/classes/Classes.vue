@@ -18,7 +18,7 @@
         :key="classe.id"
         :class="
           current_classe === classe
-            ? 'ma-1 mr-2 rounded-lg'
+            ? 'ma-1 mr-2 rounded-lg primary'
             : 'ma-1 mr-2 rounded-0'
         "
         @click="current_classe = classe"

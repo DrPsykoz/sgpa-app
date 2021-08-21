@@ -10,11 +10,6 @@
           :getNewData="() => getNewEvaluation()"
           :onConfirm="(data) => createEvaluation(data)"
         >
-          <template slot="button">
-            <v-btn text class="success">
-              <v-icon>add</v-icon>
-            </v-btn>
-          </template>
           <template v-slot:key-trimestre="{ item }">
             <v-select
               :items="trimestres"

@@ -2,7 +2,12 @@
   <div v-if="data">
     <div @click.stop="value = true">
       <slot name="button">
-        <v-btn text>{{ buttonText }}</v-btn>
+        <v-btn class="success" text icon color="white" v-if="getNewData">
+          <v-icon>add</v-icon>
+        </v-btn>
+        <v-btn text icon color="gray" v-else>
+          <v-icon>edit</v-icon>
+        </v-btn>
       </slot>
     </div>
     <generic-dialog
