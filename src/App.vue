@@ -2,7 +2,7 @@
 
 <template>
   <v-app>
-    <v-app-bar app color="secondary" dark>
+    <v-app-bar app color="secondary" dark class="no-print">
       <v-container class="d-flex">
         <v-container class="d-flex">
           <v-icon color="white" class="pr-3" large>local_library</v-icon>
@@ -29,7 +29,7 @@
     </v-app-bar>
 
     <v-main>
-      <div style="position: fixed; z-index: 999">
+      <div style="position: fixed; z-index: 999" class="no-print">
         <v-tooltip
           right
           v-for="notification in notifications"
@@ -54,7 +54,15 @@
         </v-tooltip>
       </div>
 
-      <router-view v-if="data != undefined" :data="data" />
+      <router-view class="router-view" />
     </v-main>
   </v-app>
 </template>
+
+<style lang="scss">
+* {
+  font-family: "Roboto", sans-serif;
+}
+</style>
+
+

@@ -1,6 +1,15 @@
 "use strict";
 
 import { app, protocol, BrowserWindow } from "electron";
+import Electron from "electron";
+
+import path from 'path';
+import fs from 'fs';
+
+import os from 'os';
+const ipc = Electron.ipcMain;
+const shell = Electron.shell;
+
 import { createProtocol } from "vue-cli-plugin-electron-builder/lib";
 import installExtension, { VUEJS_DEVTOOLS } from "electron-devtools-installer";
 const isDevelopment = process.env.NODE_ENV !== "production";
@@ -19,7 +28,10 @@ async function createWindow() {
       // Use pluginOptions.nodeIntegration, leave this alone
       // See nklayman.github.io/vue-cli-plugin-electron-builder/guide/security.html#node-integration for more info
       nodeIntegration: true,
+      enableRemoteModule: false,
       contextIsolation: false,
+      nodeIntegrationInWorker: false,
+      nodeIntegrationInSubFrames: false,
     },
   });
 
@@ -62,6 +74,22 @@ app.on("ready", async () => {
     }
   }
   createWindow();
+});
+
+// *Boom* Create PDF
+ipc.on('print-to-pdf', (event, fileName) => {
+  const pdfPath = path.join(os.tmpdir(), `${fileName || 'export'}.pdf`);
+  const win = BrowserWindow.fromWebContents(event.sender);
+
+  if (win) {
+    win.webContents.printToPDF({ pageSize: 'A4' }).then((data) => {
+      fs.writeFile(pdfPath, data, err => {
+        if (err) return console.log(err.message);
+        shell.openExternal('file://' + pdfPath);
+        event.sender.send('wrote-pdf', pdfPath);
+      })
+    })
+  }
 });
 
 // Exit cleanly on request from parent process in development mode.

@@ -69,6 +69,7 @@ export const mutations = {
             }
         }
     },
+
     /*
      * Eleves
      */
@@ -90,7 +91,9 @@ export const mutations = {
         }
     },
 
-
+    /*
+     * Evaluations
+     */
     setEvaluation(state: MainState, payload: { classe: IClasse, evaluation: IEvaluation }) {
         const classe = state.classes.find((x) => x.id === payload.classe.id);
         if (classe) {

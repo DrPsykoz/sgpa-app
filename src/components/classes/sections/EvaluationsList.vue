@@ -8,7 +8,7 @@
         <DialogItemData
           title="Evaluation"
           :getNewData="() => getNewEvaluation()"
-          :onConfirm="(data) => createEvaluation(classe, data)"
+          :onConfirm="(data) => createEvaluation(data)"
         >
           <template slot="button">
             <v-btn text class="success">
@@ -33,17 +33,16 @@
             <v-select
               :items="competences"
               label="Choix des competences"
-              item-text="text"
-              item-value="value"
+              item-text="name"
+              item-value="id"
               v-model="item.competences"
               multiple
-            >
-              <template v-slot:item="{ item }">
-                <h4 :class="item.class">{{ item.text }}</h4>
-              </template>
-            </v-select>
+            />
           </template>
           <template slot="key-notes">
+            <span></span>
+          </template>
+          <template slot="key-fiche_contrat">
             <span></span>
           </template>
         </DialogItemData>
@@ -70,8 +69,11 @@
           <td>{{ item.trimestre }}</td>
           <td>
             <ul>
-              <li v-for="comp in item.competences" :key="comp.id">
-                {{ comp.competence.name }}
+              <li
+                v-for="competence_id in item.competences"
+                :key="competence_id"
+              >
+                {{ competence(competence_id).name }}
               </li>
             </ul>
           </td>
@@ -79,7 +81,7 @@
             <v-btn
               text
               class="green--text ml-2 rounded-0"
-              :to="`/evaluations/${classe.id}/${item.id}`"
+              :to="`/${classe.id}/evaluations/${item.id}`"
             >
               Noter
             </v-btn>
@@ -87,7 +89,7 @@
               title="Evaluation"
               buttonText="Modifier"
               :getNewData="() => getNewEvaluation()"
-              :onConfirm="(data) => createEvaluation(classe, data)"
+              :onConfirm="(data) => createEvaluation(data)"
             >
               <template slot="key-trimestre">
                 <v-select
@@ -107,17 +109,15 @@
                 <v-select
                   :items="competences"
                   label="Choix des competences"
-                  item-text="text"
-                  item-value="value"
                   v-model="item.competences"
                   multiple
-                >
-                  <template v-slot:item="{ item }">
-                    <h4 :class="item.class">{{ item.text }}</h4>
-                  </template>
-                </v-select>
+                  :item-text="(item) => item.name"
+                />
               </template>
               <template slot="key-notes">
+                <span></span>
+              </template>
+              <template slot="key-fiche_contrat">
                 <span></span>
               </template>
             </DialogItemData>
@@ -133,13 +133,18 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Component, Vue, Prop } from "vue-property-decorator";
 import { EAnnee, ETrimestre, IClasse, IEvaluation } from "@/interfaces";
-import { dispatchRemoveEvaluation } from "@/store/main/actions";
+import {
+  dispatchCreateEvaluation,
+  dispatchRemoveEvaluation,
+} from "@/store/main/actions";
 
 import DialogItemData from "@/components/global/dialogs/DialogItemData.vue";
 
-import ElevesUtilities from "@/utilities/ElevesUtilities";
-import GlobalUtilities from "@/utilities/GlobalUtilities";
-import { readCompetences, readCycles } from "@/store/main/getters";
+import {
+  readCompetences,
+  readCompetence,
+  readCycles,
+} from "@/store/main/getters";
 
 @Component({
   components: {
@@ -169,11 +174,22 @@ export default class EvalutationsList extends Vue {
     return readCompetences(this.$store);
   }
 
+  get competence() {
+    return (id: string) => readCompetence(this.$store)(id);
+  }
+
   public getNewEvaluation() {
     return new IEvaluation();
   }
 
-  public deleteEvalutation(evaluation: IEvaluation) {
+  public createEvaluation(evaluation: IEvaluation) {
+    dispatchCreateEvaluation(this.$store, {
+      classe: this.classe,
+      evaluation: evaluation,
+    });
+  }
+
+  public deleteEvaluation(evaluation: IEvaluation) {
     dispatchRemoveEvaluation(this.$store, {
       classe: this.classe,
       evaluation_id: evaluation.id,

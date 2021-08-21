@@ -58,9 +58,6 @@
 import { Component, Vue, Prop } from "vue-property-decorator";
 import { IClasse } from "@/interfaces";
 
-import ElevesUtilities from "@/utilities/ElevesUtilities";
-import GlobalUtilities from "@/utilities/GlobalUtilities";
-
 @Component({
   components: {},
 })

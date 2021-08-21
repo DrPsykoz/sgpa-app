@@ -1,6 +1,5 @@
 import { Component, Vue } from 'vue-property-decorator';
 
-import GlobalUtilities from '@/utilities/GlobalUtilities';
 import { readCurrentState, readNotifications } from './store/main/getters';
 import { commitClearNotifications, commitSetCurrentState } from './store/main/mutations';
 import { MainState } from './store/main/state';
@@ -18,7 +17,7 @@ export default class App extends Vue {
   }
 
   public saveData() {
-    GlobalUtilities.writeToFileSync("./static/data.json", JSON.stringify(readCurrentState(this.$store)));
+    this.$GlobalUtils.writeToFileSync("./static/data.json", JSON.stringify(readCurrentState(this.$store)));
     dispatchAddNotification(this.$store, {
       notification: new INotification({
         text: 'Sauvegarde terminée !',
@@ -36,7 +35,7 @@ export default class App extends Vue {
   }
 
   public mounted() {
-    this.data = JSON.parse(GlobalUtilities.readFromFile("./static/data.json"));
+    this.data = JSON.parse(this.$GlobalUtils.readFromFile("./static/data.json"));
     commitSetCurrentState(this.$store, this.data as MainState);
     commitClearNotifications(this.$store);
   }

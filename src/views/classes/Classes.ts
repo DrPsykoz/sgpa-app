@@ -1,11 +1,10 @@
-import { IClasse, IEleve } from '@/interfaces';
+import { IClasse } from '@/interfaces';
 import { Component, Vue, Watch } from 'vue-property-decorator';
 
 import DialogAjout from "@/components/General/DialogAjout.vue";
 
-import GlobalUtilities from '@/utilities/GlobalUtilities';
 import { readClasses, readCycles } from '@/store/main/getters';
-import { dispatchCreateClasse, dispatchRemoveClasse, dispatchRemoveEleve } from '@/store/main/actions';
+import { dispatchCreateClasse, dispatchRemoveClasse } from '@/store/main/actions';
 
 import ElevesList from '@/components/classes/sections/ElevesList.vue';
 import EvaluationsList from '@/components/classes/sections/EvaluationsList.vue';
@@ -57,7 +56,7 @@ export default class Classes extends Vue {
   }
 
   public getNote(note: number) {
-    return GlobalUtilities.getNote(note);
+    return this.$GlobalUtils.getNoteDetails(note);
   }
 
   // public getMoyenne(eleveID: number) {

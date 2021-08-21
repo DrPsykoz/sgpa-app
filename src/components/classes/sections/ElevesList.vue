@@ -73,9 +73,6 @@ import { dispatchCreateEleve, dispatchRemoveEleve } from "@/store/main/actions";
 
 import DialogItemData from "@/components/global/dialogs/DialogItemData.vue";
 
-import ElevesUtilities from "@/utilities/ElevesUtilities";
-import GlobalUtilities from "@/utilities/GlobalUtilities";
-
 @Component({
   components: {
     DialogItemData,
@@ -115,11 +112,11 @@ export default class ElevesList extends Vue {
   }
 
   public getMoyenne(eleve: IEleve) {
-    return ElevesUtilities.getMoyenne(this.classe, eleve);
+    return this.$ElevesUtils.getMoyenne(this.classe, eleve);
   }
 
   public getNote(note: number) {
-    return GlobalUtilities.getNote(note);
+    return this.$GlobalUtils.getNoteDetails(note);
   }
 }
 </script>

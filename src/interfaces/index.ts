@@ -12,44 +12,97 @@ export class IClasse extends IIdentifiedItem {
     name = '';
     eleves: IEleve[] = [];
     evaluations: IEvaluation[] = [];
+
+    public constructor(init?: Partial<IClasse>) {
+        super();
+        Object.assign(this, init);
+    }
 }
 
 export class IEleve extends IIdentifiedItem {
     first_name = '';
     last_name = '';
+
+    public constructor(init?: Partial<IEleve>) {
+        super();
+        Object.assign(this, init);
+    }
 }
 
 export class IEvaluation extends IIdentifiedItem {
     trimestre: ETrimestre = ETrimestre.Premier;
     annee: EAnnee = EAnnee.Quatrieme;
-    competences: ICompetence[] = [];
+    competences: string[] = [];
     notes: INote[] = [];
+    fiche_contrat: IFicheContrat = new IFicheContrat();
+
+    public constructor(init?: Partial<IEvaluation>) {
+        super();
+        Object.assign(this, init);
+    }
+}
+
+export class IFicheContrat {
+    intitule_projet = '';
+    champ_professionnel = 'Champ habitat';
+    domaine_socle = '';
+    activite_reference = '';
+    parcours_cible = '';
+    activites_eleves: Record<string, string[]> = {};
+    activites_formation: Record<string, string[]> = {};
+    on_donne: string[] = [];
+    on_demande: string[] = [];
+    on_exige: string[] = [];
 }
 
 export class INote extends IIdentifiedItem {
-    evaluation: IEvaluation;
-    eleve: IEleve;
-    competence: ICompetence;
+    eleve_id: string;
+    competence_id: string;
     note: number;
+
+    public constructor(init?: Partial<INote>) {
+        super();
+        Object.assign(this, init);
+    }
 }
 
 export class ICycle extends IIdentifiedItem {
     name = '';
     domaines: IDomaine[] = [];
+
+    public constructor(init?: Partial<ICycle>) {
+        super();
+        Object.assign(this, init);
+    }
 }
 
 export class IDomaine extends IIdentifiedItem {
     name = '';
     champs: IChamp[] = [];
+
+    public constructor(init?: Partial<IDomaine>) {
+        super();
+        Object.assign(this, init);
+    }
 }
 
 export class IChamp extends IIdentifiedItem {
     name = '';
     competences: ICompetence[] = [];
+
+    public constructor(init?: Partial<IChamp>) {
+        super();
+        Object.assign(this, init);
+    }
 }
 
 export class ICompetence extends IIdentifiedItem {
     name = '';
+
+    public constructor(init?: Partial<ICompetence>) {
+        super();
+        Object.assign(this, init);
+    }
 }
 
 export enum ETrimestre {
@@ -76,4 +129,22 @@ export class INotification extends IIdentifiedItem {
 
 export enum ENotificationType {
     ERROR = "error", SUCCESS = "success", INFO = "info"
+}
+
+declare module "vue/types/vue" {
+    interface Vue {
+        $GlobalUtils: IGlobalUtilities;
+        $ElevesUtils: IElevesUtilities;
+    }
+}
+
+export interface IGlobalUtilities {
+    readFromFile: (filepath: string) => any;
+    writeToFileSync: (filepath: string, content: string) => void;
+    getNoteDetails: (note: number) => { name: string, color: string }
+    isSame: (obj1: any, obj2: any) => boolean;
+}
+
+export interface IElevesUtilities {
+    getMoyenne: (classe: IClasse, eleve: IEleve) => number;
 }

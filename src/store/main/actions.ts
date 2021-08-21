@@ -71,19 +71,19 @@ export const actions = {
             dispatchAddNotification(context, {
                 notification: new INotification({ text: 'Impossible de creer un eleve sans prenom.', type: ENotificationType.ERROR }),
             });
-            return false;
+            return;
         }
         if (!payload.eleve.last_name || payload.eleve.last_name.length === 0) {
             dispatchAddNotification(context, {
                 notification: new INotification({ text: 'Impossible de creer un eleve sans nom de famille.', type: ENotificationType.ERROR }),
             });
-            return false;
+            return;
         }
         commitSetEleve(context, payload);
-        return true;
+        return;
     },
     async actionRemoveEleve(context: MainContext, payload: { classe: IClasse, eleve_id: string }) {
-        const result = commitRemoveEleve(context, payload);
+        commitRemoveEleve(context, payload);
     },
 
     async actionCreateCycle(context: MainContext, payload: { cycle: ICycle }) {

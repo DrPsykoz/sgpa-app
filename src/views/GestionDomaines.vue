@@ -102,6 +102,7 @@
             <DialogItemData
               v-model="dialogNewCompetence"
               title="Ajouter une competence"
+              buttonText="Ajouter une competence"
               :getNewData="() => getNewCompetence()"
               :onConfirm="
                 (data) => registerNewCompetence(cycle, domaine, champ, data)
@@ -112,6 +113,7 @@
           <DialogItemData
             v-model="dialogNewChamp"
             title="Ajouter un champ"
+            buttonText="Ajouter un champ"
             :getNewData="() => getNewChamp()"
             :onConfirm="(data) => registerNewChamp(cycle, domaine, data)"
             class="ma-2 pb-2 ml-0"
@@ -122,6 +124,7 @@
           <DialogItemData
             v-model="dialogNewDomaine"
             title="Ajouter un domaine"
+            buttonText="Ajouter un domaine"
             :getNewData="() => getNewDomaine()"
             :onConfirm="(data) => registerNewDomaine(cycle, data)"
           />
@@ -130,6 +133,7 @@
       <DialogItemData
         v-model="dialogNewCycle"
         title="Ajouter un cycle"
+        buttonText="Ajouter un cycle"
         :getNewData="() => getNewCycle()"
         :onConfirm="(data) => registerNewCycle(data)"
       />
