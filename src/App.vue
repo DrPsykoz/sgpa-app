@@ -12,13 +12,13 @@
           <v-btn to="/classes" text class="rounded-0">
             <span class="mr-2">
               <v-icon>groups</v-icon>
-              Gestion des Classes
+              Classes
             </span>
           </v-btn>
           <v-btn justify="end" to="/gestion_domaines" text class="rounded-0">
             <span class="mr-2">
               <v-icon>description</v-icon>
-              Gestion des cycles
+              Cycles
             </span>
           </v-btn>
           <v-btn class="green rounded-0" @click="saveData()">
@@ -62,6 +62,11 @@
 <style lang="scss">
 * {
   font-family: "Roboto", sans-serif;
+}
+
+#app {
+  max-width: 1200px;
+  margin: auto;
 }
 </style>
 

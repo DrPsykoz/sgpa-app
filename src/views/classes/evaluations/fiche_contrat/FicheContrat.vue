@@ -4,16 +4,7 @@
   <div v-if="classe && evaluation" class="fiche_contrat">
     <v-container
       style="position: relative"
-      class="
-        mt-2
-        mb-1
-        pb-0
-        mb-3
-        d-flex
-        flex-row
-        justify-space-between
-        align-center
-      "
+      class="pb-0 mb-3 d-flex flex-row justify-space-between align-center"
     >
       <v-btn
         class="rounded-0 no-print"
@@ -40,7 +31,7 @@
     </v-container>
 
     <v-container
-      class="secondary--text pa-2"
+      class="secondary--text pa-2 pb-0"
       style="border: solid black 2px; position: relative"
     >
       <div class="d-flex">
@@ -61,7 +52,7 @@
       </div>
     </v-container>
 
-    <v-container class="secondary--text mt-4 pa-0">
+    <v-container class="secondary--text mt-2 pa-0">
       <table
         class="text-center"
         style="border-spacing: 10px 0px"
@@ -75,7 +66,7 @@
           <th style="width: 30%">Parcours/métiers ciblés</th>
         </tr>
         <tr>
-          <td>
+          <td class="pa-0">
             <v-textarea
               solo
               v-model="evaluation.fiche_contrat.domaine_socle"
@@ -87,7 +78,7 @@
               full-width
             />
           </td>
-          <td>
+          <td class="pa-0">
             <v-textarea
               solo
               v-model="evaluation.fiche_contrat.activite_reference"
@@ -99,7 +90,7 @@
               full-width
             />
           </td>
-          <td>
+          <td class="pa-0">
             <v-textarea
               solo
               v-model="evaluation.fiche_contrat.parcours_cible"
@@ -115,7 +106,7 @@
       </table>
     </v-container>
 
-    <v-container class="secondary--text mt-4 pa-0">
+    <v-container class="secondary--text mt-2 pa-0">
       <div class="table_activities">
         <div class="table_activities__headers">
           <div style="width: 25%" class="table_activities__cell">
@@ -189,10 +180,12 @@
                 table_activities__button_add
               "
               :style="
-                evaluation.fiche_contrat.activites_formation[competence_id]
-                  .length > 0 ||
-                evaluation.fiche_contrat.activites_eleves[competence_id]
-                  .length > 0
+                (evaluation.fiche_contrat.activites_formation[competence_id] &&
+                  evaluation.fiche_contrat.activites_formation[competence_id]
+                    .length > 0) ||
+                (evaluation.fiche_contrat.activites_eleves[competence_id] &&
+                  evaluation.fiche_contrat.activites_eleves[competence_id]
+                    .length > 0)
                   ? 'border-top: black solid 2px'
                   : 'border-top: none'
               "
@@ -260,10 +253,12 @@
                 table_activities__button_add
               "
               :style="
-                evaluation.fiche_contrat.activites_formation[competence_id]
-                  .length > 0 ||
-                evaluation.fiche_contrat.activites_eleves[competence_id]
-                  .length > 0
+                (evaluation.fiche_contrat.activites_formation[competence_id] &&
+                  evaluation.fiche_contrat.activites_formation[competence_id]
+                    .length > 0) ||
+                (evaluation.fiche_contrat.activites_eleves[competence_id] &&
+                  evaluation.fiche_contrat.activites_eleves[competence_id]
+                    .length > 0)
                   ? 'border-top: black solid 2px'
                   : 'border-top: none'
               "
@@ -287,7 +282,7 @@
       </div>
     </v-container>
 
-    <v-container class="secondary--text mt-4 pa-0">
+    <v-container class="secondary--text mt-2 pa-0">
       <table
         class="text-center ma-0"
         style="width: 100%; margin: 0"
@@ -354,16 +349,18 @@
 </template>
 
 
-<style scoped lang="scss">
+<style  lang="scss">
 .fiche_contrat {
   background-color: white;
-  max-width: 21cm;
+  max-width: 20cm;
   margin: auto;
   padding: 20px;
   border: gray 1px solid;
 
   * :not(h1, h4, .v-icon) {
     font-size: 10pt !important;
+    line-height: 15px !important;
+    font-family: "Roboto", sans-serif;
   }
 
   .table_activities {
@@ -411,6 +408,7 @@
           width: 100%;
           border-bottom: black solid 2px;
           flex-grow: 1;
+          padding-bottom: 5px;
 
           .v-textarea {
             padding: 0;
@@ -452,8 +450,8 @@
   td,
   th {
     border: 2px solid black;
-    padding: 5px;
     height: 1px;
+    padding: 5px 0;
   }
 
   input {
@@ -461,7 +459,8 @@
     flex-grow: 1;
     height: 25px;
     padding: 0 5px;
-    margin: 2px;
+    margin: 6px;
+    margin-top: -5px !important;
   }
 
   input,
@@ -487,13 +486,14 @@
 
   .v-textarea,
   .v-input {
-    background-color: red !important;
+    height: 100%;
+    padding: 5px 0;
+
+    border-radius: 0;
     * {
-      background-color: red !important;
+      border-radius: 0;
+      height: 100%;
     }
   }
 }
-</style>
-
-<style>
 </style>
