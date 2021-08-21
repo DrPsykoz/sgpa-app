@@ -273,10 +273,12 @@
             </div>
           </div>
           <div class="table_activities__cell">
-            {{ domaineByCompetence(competence_id).name }}
+            <span class="ma-2">{{
+              domaineByCompetence(competence_id).name
+            }}</span>
           </div>
           <div class="table_activities__cell">
-            {{ competence(competence_id).name }}
+            <span class="ma-2">{{ competence(competence_id).name }}</span>
           </div>
         </div>
       </div>
