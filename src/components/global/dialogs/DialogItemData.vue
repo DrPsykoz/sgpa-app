@@ -2,10 +2,15 @@
   <div v-if="data">
     <div @click.stop="value = true">
       <slot name="button">
-        <v-btn class="success" text icon color="white" v-if="getNewData">
+        <v-btn
+          class="success rounded-0"
+          text
+          :color="color || 'white'"
+          v-if="getNewData"
+        >
           <v-icon>add</v-icon>
         </v-btn>
-        <v-btn text icon color="gray" v-else>
+        <v-btn text icon :color="color || 'gray'" v-else>
           <v-icon>edit</v-icon>
         </v-btn>
       </slot>
@@ -21,7 +26,7 @@
     >
       <template slot="content">
         <v-form>
-          <template v-for="key in Object.keys(data)">
+          <template v-for="key in getKeys(data)">
             <slot v-if="key !== 'id'" :name="`key-${key}`" :item="data">
               <v-text-field
                 :key="key"
@@ -54,11 +59,21 @@ export default class DialogItemData<T extends IIdentifiedItem> extends Vue {
   @Prop() public readonly onConfirm: (data) => void;
   @Prop() public readonly keysTranslate: Record<string, string>;
   @Prop() public readonly defaultData: T;
+  @Prop() public readonly enabledKeys: string[];
+  @Prop() public readonly color: string;
 
   public defaultDataCopy: T | null = null;
 
   public value = false;
   public data: T | null = null;
+
+  public getKeys(item) {
+    const keys = Object.keys(item);
+    if (this.enabledKeys) {
+      return keys.filter((x) => this.enabledKeys.includes(x));
+    }
+    return keys;
+  }
 
   public confirm() {
     if (this.data !== null) {

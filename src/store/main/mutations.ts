@@ -11,9 +11,10 @@ export const mutations = {
         state.cycles = payload.cycles;
     },
 
-    setClasses(state: MainState, payload: IClasse[]) {
-        state.classes = payload;
-    },
+    /* 
+     *   Classes 
+     */
+    setClasses(state: MainState, payload: IClasse[]) { state.classes = payload; },
     setClasse(state: MainState, payload: IClasse) {
         const classes = state.classes.filter((x) => x.id !== payload.id);
         classes.push(payload);
@@ -23,18 +24,20 @@ export const mutations = {
         state.classes = state.classes.filter((x) => x.id !== payload.id);
     },
 
-    setCycles(state: MainState, payload: ICycle[]) {
-        state.cycles = payload;
-    },
+    /*
+     *   Cycles
+     */
+    setCycles(state: MainState, payload: ICycle[]) { state.cycles = payload; },
     setCycle(state: MainState, payload: ICycle) {
         const cycles = state.cycles.filter((x) => x.id !== payload.id);
         cycles.push(payload);
         state.cycles = cycles;
     },
-    removeCycle(state: MainState, payload: ICycle) {
-        state.cycles = state.cycles.filter((x) => x.id !== payload.id);
-    },
+    removeCycle(state: MainState, payload: ICycle) { state.cycles = state.cycles.filter((x) => x.id !== payload.id); },
 
+    /*
+     *   Domaines
+     */
     setDomaine(state: MainState, payload: { cycle: ICycle, domaine: IDomaine }) {
         const cycle = state.cycles.find((x) => x.id === payload.cycle.id);
         if (cycle) {
@@ -43,6 +46,16 @@ export const mutations = {
             cycle.domaines = domaines;
         }
     },
+    removeDomaine(state: MainState, payload: { cycle: ICycle, domaine: IDomaine }) {
+        const cycle = state.cycles.find((x) => x.id === payload.cycle.id);
+        if (cycle) {
+            cycle.domaines = cycle.domaines.filter((x) => x.id !== payload.domaine.id);
+        }
+    },
+
+    /*
+     *   Champs
+     */
     setChamp(state: MainState, payload: { cycle: ICycle, domaine: IDomaine, champ: IChamp }) {
         const cycle = state.cycles.find((x) => x.id === payload.cycle.id);
         if (cycle) {
@@ -54,6 +67,19 @@ export const mutations = {
             }
         }
     },
+    removeChamp(state: MainState, payload: { cycle: ICycle, domaine: IDomaine, champ: IChamp }) {
+        const cycle = state.cycles.find((x) => x.id === payload.cycle.id);
+        if (cycle) {
+            const domaine = cycle.domaines.find((x) => x.id === payload.domaine.id);
+            if (domaine) {
+                domaine.champs = domaine.champs.filter((x) => x.id !== payload.champ.id);
+            }
+        }
+    },
+
+    /*
+     *   Competences
+     */
     setCompetence(state: MainState, payload: { cycle: ICycle, domaine: IDomaine, champ: IChamp, competence: ICompetence }) {
         const cycle = state.cycles.find((x) => x.id === payload.cycle.id);
         if (cycle) {
@@ -64,6 +90,19 @@ export const mutations = {
                     const competences = champ.competences.filter((x) => x.id !== payload.competence.id);
                     competences.push(payload.competence);
                     champ.competences = competences;
+                }
+
+            }
+        }
+    },
+    removeCompetence(state: MainState, payload: { cycle: ICycle, domaine: IDomaine, champ: IChamp, competence: ICompetence }) {
+        const cycle = state.cycles.find((x) => x.id === payload.cycle.id);
+        if (cycle) {
+            const domaine = cycle.domaines.find((x) => x.id === payload.domaine.id);
+            if (domaine) {
+                const champ = domaine.champs.find((x) => x.id === payload.champ.id);
+                if (champ) {
+                    champ.competences = champ.competences.filter((x) => x.id !== payload.competence.id);
                 }
 
             }
@@ -110,6 +149,9 @@ export const mutations = {
         }
     },
 
+    /*
+     * Notifications
+     */
     addNotification(state: MainState, payload: { notification: INotification }) {
         state.notifications.push(payload.notification);
     },
@@ -138,18 +180,24 @@ export const commitRemoveEvaluation = commit(mutations.removeEvaluation);
 export const commitSetEleve = commit(mutations.setEleve);
 export const commitRemoveEleve = commit(mutations.removeEleve);
 
-// Cycles
-export const commitSetCycles = commit(mutations.setCycles);
-export const commitSetCycle = commit(mutations.setCycle);
-export const commitRemoveCycle = commit(mutations.removeCycle);
-
 // Classes
 export const commitSetClasses = commit(mutations.setClasses);
 export const commitSetClasse = commit(mutations.setClasse);
 export const commitRemoveClasse = commit(mutations.removeClasse);
 
+// Cycles
+export const commitSetCycles = commit(mutations.setCycles);
+export const commitSetCycle = commit(mutations.setCycle);
+export const commitRemoveCycle = commit(mutations.removeCycle);
 
-
+// Domaines
 export const commitSetDomaine = commit(mutations.setDomaine);
+export const commitRemoveDomaine = commit(mutations.removeDomaine);
+
+// Champs
 export const commitSetChamp = commit(mutations.setChamp);
+export const commitRemoveChamp = commit(mutations.removeChamp);
+
+// Competences
 export const commitSetCompetence = commit(mutations.setCompetence);
+export const commitRemoveCompetence = commit(mutations.removeCompetence);

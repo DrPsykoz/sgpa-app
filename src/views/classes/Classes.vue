@@ -7,7 +7,7 @@
         class="text-center text-uppercase"
         style="letter-spacing: 1px; font-weight: 300"
       >
-        Gestion des classes
+        Gestion des sessions
       </h1>
     </v-container>
 
@@ -26,7 +26,7 @@
         {{ classe.name === "" ? "#" + classe.id : classe.name }}
       </v-btn>
       <v-btn class="ma-1 green white--text rounded-0" @click="addNewClasse()">
-        Ajouter une nouvelle classe
+        Ajouter une nouvelle session
       </v-btn>
     </v-container>
 
@@ -58,7 +58,7 @@
         style="flex-direction: column"
         v-if="current_classe !== undefined && display.configuration"
       >
-        <v-text-field label="Nom de la classe" v-model="current_classe.name" />
+        <v-text-field label="Nom de la session" v-model="current_classe.name" />
 
         <v-container class="d-flex pa-0">
           <v-container
@@ -137,7 +137,7 @@
           @click="deleteClasse(current_classe)"
           class="red white--text rounded-0"
         >
-          Supprimer la classe
+          Supprimer la session
         </v-btn>
       </v-container>
     </v-container>

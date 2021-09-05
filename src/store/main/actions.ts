@@ -2,7 +2,7 @@ import { ENotificationType, IChamp, IClasse, ICompetence, ICycle, IDomaine, IEle
 import { getStoreAccessors } from 'typesafe-vuex';
 import { ActionContext } from 'vuex';
 import { State } from '../state';
-import { commitAddNotification, commitClearNotifications, commitRemoveClasse, commitRemoveEleve, commitRemoveEvaluation, commitRemoveNotification, commitSetChamp, commitSetClasse, commitSetCompetence, commitSetCycle, commitSetDomaine, commitSetEleve, commitSetEvaluation } from './mutations';
+import { commitAddNotification, commitClearNotifications, commitRemoveChamp, commitRemoveClasse, commitRemoveCompetence, commitRemoveCycle, commitRemoveDomaine, commitRemoveEleve, commitRemoveEvaluation, commitRemoveNotification, commitSetChamp, commitSetClasse, commitSetCompetence, commitSetCycle, commitSetDomaine, commitSetEleve, commitSetEvaluation } from './mutations';
 import { MainState } from './state';
 import { v4 as uuidv4 } from 'uuid';
 import { readClasse } from './getters';
@@ -99,6 +99,19 @@ export const actions = {
         commitSetCompetence(context, { cycle: payload.cycle, domaine: payload.domaine, champ: payload.champ, competence: payload.competence });
     },
 
+    async actionRemoveCycle(context: MainContext, payload: { cycle: ICycle }) {
+        commitRemoveCycle(context, payload.cycle);
+    },
+    async actionRemoveDomaine(context: MainContext, payload: { cycle: ICycle, domaine: IDomaine }) {
+        commitRemoveDomaine(context, { cycle: payload.cycle, domaine: payload.domaine });
+    },
+    async actionRemoveChamp(context: MainContext, payload: { cycle: ICycle, domaine: IDomaine, champ: IChamp }) {
+        commitRemoveChamp(context, { cycle: payload.cycle, domaine: payload.domaine, champ: payload.champ });
+    },
+    async actionRemoveCompetence(context: MainContext, payload: { cycle: ICycle, domaine: IDomaine, champ: IChamp, competence: ICompetence }) {
+        commitRemoveCompetence(context, { cycle: payload.cycle, domaine: payload.domaine, champ: payload.champ, competence: payload.competence });
+    },
+
 
 };
 
@@ -109,6 +122,12 @@ export const dispatchCreateCycle = dispatch(actions.actionCreateCycle);
 export const dispatchCreateDomaine = dispatch(actions.actionCreateDomaine);
 export const dispatchCreateChamp = dispatch(actions.actionCreateChamp);
 export const dispatchCreateCompetence = dispatch(actions.actionCreateCompetence);
+
+
+export const dispatchRemoveCycle = dispatch(actions.actionRemoveCycle);
+export const dispatchRemoveDomaine = dispatch(actions.actionRemoveDomaine);
+export const dispatchRemoveChamp = dispatch(actions.actionRemoveChamp);
+export const dispatchRemoveCompetence = dispatch(actions.actionRemoveCompetence);
 
 
 

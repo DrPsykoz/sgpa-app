@@ -81,7 +81,7 @@ export default class Classes extends Vue {
   // }
 
   public addNewClasse() {
-    dispatchCreateClasse(this.$store, { name: 'Nouvelle classe' } as IClasse);
+    dispatchCreateClasse(this.$store, { name: 'Nouvelle session' } as IClasse);
   }
 
 

@@ -22,15 +22,26 @@
           class="ma-0 pa-0 d-flex align-center justify-space-between"
         >
           <h1 class="white--text text-uppercase">{{ cycle.name }}</h1>
-          <v-btn
-            class="ma-0"
-            text
-            icon
-            color="red lighten-2"
-            @click="() => deleteCycle(cycle)"
-          >
-            <v-icon>delete</v-icon>
-          </v-btn>
+          <div class="d-flex">
+            <DialogItemData
+              title="Modifier un cycle"
+              buttonText="Modifier"
+              color="white"
+              :onConfirm="(data) => null"
+              :keysTranslate="keysTranslation"
+              :defaultData="cycle"
+              :enabledKeys="['name']"
+            />
+            <v-btn
+              class="ma-0"
+              text
+              icon
+              color="red lighten-2"
+              @click="() => deleteCycle(cycle)"
+            >
+              <v-icon>delete</v-icon>
+            </v-btn>
+          </div>
         </v-container>
         <v-container
           fluid
@@ -45,15 +56,26 @@
             <h2>
               {{ domaine.name }}
             </h2>
-            <v-btn
-              class="ma-0"
-              text
-              icon
-              color="red lighten-2"
-              @click="() => deleteDomaine(domaine)"
-            >
-              <v-icon>delete</v-icon>
-            </v-btn>
+            <div class="d-flex">
+              <DialogItemData
+                title="Modifier un domaine"
+                buttonText="Modifier"
+                color="secondary"
+                :onConfirm="(data) => null"
+                :keysTranslate="keysTranslation"
+                :defaultData="domaine"
+                :enabledKeys="['name']"
+              />
+              <v-btn
+                class="ma-0"
+                text
+                icon
+                color="red lighten-2"
+                @click="() => deleteDomaine(cycle, domaine)"
+              >
+                <v-icon>delete</v-icon>
+              </v-btn>
+            </div>
           </v-container>
 
           <v-container
@@ -68,35 +90,57 @@
               <h3>
                 {{ champ.name }}
               </h3>
-              <v-btn
-                class="ma-0"
-                text
-                icon
-                color="red lighten-2"
-                @click="() => deleteChamp(champ)"
-              >
-                <v-icon>delete</v-icon>
-              </v-btn>
+              <div class="d-flex">
+                <DialogItemData
+                  title="Modifier un champ"
+                  buttonText="Modifier"
+                  color="secondary"
+                  :onConfirm="(data) => null"
+                  :keysTranslate="keysTranslation"
+                  :defaultData="champ"
+                  :enabledKeys="['name']"
+                />
+                <v-btn
+                  class="ma-0"
+                  text
+                  icon
+                  color="red lighten-2"
+                  @click="() => deleteChamp(cycle, domaine, champ)"
+                >
+                  <v-icon>delete</v-icon>
+                </v-btn>
+              </div>
             </v-container>
 
             <ul>
               <li
                 v-for="(competence, index) in champ.competences"
                 :key="index"
-                class="d-flex justify-space-between"
+                class="d-flex justify-space-between align-center"
               >
-                <p class="ma-0">
-                  {{ competence.name }}
-                </p>
-                <v-btn
-                  class="ma-0"
-                  text
-                  icon
-                  color="red lighten-2"
-                  @click="() => deleteCompetence(competence)"
-                >
-                  <v-icon>delete</v-icon>
-                </v-btn>
+                {{ competence.name }}
+                <div class="d-flex">
+                  <DialogItemData
+                    title="Modifier une competence"
+                    buttonText="Modifier"
+                    color="secondary"
+                    :onConfirm="(data) => null"
+                    :keysTranslate="keysTranslation"
+                    :defaultData="competence"
+                    :enabledKeys="['name']"
+                  />
+                  <v-btn
+                    class="ma-0"
+                    text
+                    icon
+                    color="red lighten-2"
+                    @click="
+                      () => deleteCompetence(cycle, domaine, champ, competence)
+                    "
+                  >
+                    <v-icon>delete</v-icon>
+                  </v-btn>
+                </div>
               </li>
             </ul>
             <DialogItemData
@@ -108,7 +152,13 @@
                 (data) => registerNewCompetence(cycle, domaine, champ, data)
               "
               class="ma-2 pb-3 ml-0"
-            />
+              :keysTranslate="keysTranslation"
+              :enabledKeys="['name']"
+            >
+              <template slot="button">
+                <v-btn color="success" text> Ajouter une competence </v-btn>
+              </template>
+            </DialogItemData>
           </v-container>
           <DialogItemData
             v-model="dialogNewChamp"
@@ -117,7 +167,13 @@
             :getNewData="() => getNewChamp()"
             :onConfirm="(data) => registerNewChamp(cycle, domaine, data)"
             class="ma-2 pb-2 ml-0"
-          />
+            :keysTranslate="keysTranslation"
+            :enabledKeys="['name']"
+          >
+            <template slot="button">
+              <v-btn color="success" text> Ajouter un champ </v-btn>
+            </template>
+          </DialogItemData>
         </v-container>
 
         <v-container white fluid class="mt-3">
@@ -127,7 +183,13 @@
             buttonText="Ajouter un domaine"
             :getNewData="() => getNewDomaine()"
             :onConfirm="(data) => registerNewDomaine(cycle, data)"
-          />
+            :keysTranslate="keysTranslation"
+            :enabledKeys="['name']"
+          >
+            <template slot="button">
+              <v-btn color="success" text> Ajouter un domaine </v-btn>
+            </template>
+          </DialogItemData>
         </v-container>
       </v-container>
       <DialogItemData
@@ -136,7 +198,13 @@
         buttonText="Ajouter un cycle"
         :getNewData="() => getNewCycle()"
         :onConfirm="(data) => registerNewCycle(data)"
-      />
+        :keysTranslate="keysTranslation"
+        :enabledKeys="['name']"
+      >
+        <template slot="button">
+          <v-btn color="success" text> Ajouter un cycle </v-btn>
+        </template>
+      </DialogItemData>
     </v-container>
   </v-app>
 </template>

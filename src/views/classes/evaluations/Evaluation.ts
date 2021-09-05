@@ -34,7 +34,7 @@ export default class Evaluation extends Vue {
     }
 
     public getHeaders() {
-        const headers: any[] = [];
+        const headers: { text: string, value: string }[] = [];
         headers.push({ text: "Eleves", value: "eleve" });
         if (this.evaluation !== undefined) {
             this.evaluation.competences.forEach((competence_id) => {

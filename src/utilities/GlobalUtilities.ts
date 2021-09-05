@@ -4,6 +4,15 @@ export const GlobalUtilities = {
         try {
             if (window && window.require) {
                 const fs = window.require("fs");
+                if (!fs.existsSync(filepath)) {
+                    fs.mkdirSync('./static');
+                    const defaultData = {
+                        classes: [],
+                        cycles: [],
+                        notifications: []
+                    }
+                    fs.writeFileSync(filepath, JSON.stringify(defaultData));
+                }
                 return fs.readFileSync(filepath, "utf8");
             }
             return null;

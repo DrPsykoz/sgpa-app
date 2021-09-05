@@ -12,7 +12,7 @@
           <v-btn to="/classes" text class="rounded-0">
             <span class="mr-2">
               <v-icon>groups</v-icon>
-              Classes
+              Sessions
             </span>
           </v-btn>
           <v-btn justify="end" to="/gestion_domaines" text class="rounded-0">

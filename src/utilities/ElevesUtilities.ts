@@ -2,7 +2,7 @@ import { IClasse, IEleve, IEvaluation, INote } from "@/interfaces"
 
 export const ElevesUtilities = {
     getMoyenne: (classe: IClasse, eleve: IEleve) => {
-        return 5;
+        return 0;
     },
 
     getOrCreateNotation: (evaluation: IEvaluation, eleve: IEleve, competence_id: string) => {
