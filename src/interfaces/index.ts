@@ -140,7 +140,7 @@ declare module "vue/types/vue" {
 
 export interface IGlobalUtilities {
     readFromFile: (filepath: string) => any;
-    writeToFileSync: (filepath: string, content: string) => void;
+    writeToFileSync: (filepath: string, content: string) => boolean;
     getNoteDetails: (note: number) => { name: string, color: string }
     isSame: (obj1: any, obj2: any) => boolean;
 }

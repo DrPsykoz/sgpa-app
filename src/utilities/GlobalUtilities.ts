@@ -1,23 +1,29 @@
-import { readCompetences } from "@/store/main/getters";
-import { MainState } from "@/store/main/state";
-import { Store } from "vuex";
-
 export const GlobalUtilities = {
 
     readFromFile: (filepath: string) => {
-        if (window && window.require) {
-            const fs = window.require("fs");
-            return fs.readFileSync(filepath, "utf8");
-        } else {
-            console.error(`error while loading file at ${filepath}`)
+        try {
+            if (window && window.require) {
+                const fs = window.require("fs");
+                return fs.readFileSync(filepath, "utf8");
+            }
+            return null;
+        } catch (error) {
+            console.error(error);
             return null;
         }
     },
 
     writeToFileSync: (filepath: string, content: string) => {
-        if (window && window.require) {
-            const fs = window.require("fs");
-            fs.writeFileSync(filepath, content);
+        try {
+            if (window && window.require) {
+                const fs = window.require("fs");
+                fs.writeFileSync(filepath, content);
+                return true;
+            }
+            return false;
+        } catch (error) {
+            console.error(error);
+            return false;
         }
     },
 

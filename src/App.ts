@@ -17,13 +17,23 @@ export default class App extends Vue {
   }
 
   public saveData() {
-    this.$GlobalUtils.writeToFileSync("./static/data.json", JSON.stringify(readCurrentState(this.$store)));
-    dispatchAddNotification(this.$store, {
-      notification: new INotification({
-        text: 'Sauvegarde terminée !',
-        type: ENotificationType.SUCCESS,
-      })
-    });
+    const result = this.$GlobalUtils.writeToFileSync("./static/data.json", JSON.stringify(readCurrentState(this.$store)));
+    if (result) {
+      dispatchAddNotification(this.$store, {
+        notification: new INotification({
+          text: 'Sauvegarde terminée !',
+          type: ENotificationType.SUCCESS,
+        })
+      });
+    } else {
+      dispatchAddNotification(this.$store, {
+        notification: new INotification({
+          text: 'Erreur lors de la sauvegarde !',
+          type: ENotificationType.ERROR,
+        })
+      });
+    }
+
   }
 
   public removeNotification(notification) {
