@@ -1,6 +1,6 @@
 "use strict";
 
-import { app, protocol, BrowserWindow } from "electron";
+import { app, protocol, BrowserWindow, Tray, Menu } from "electron";
 import Electron from "electron";
 
 import path from 'path';
@@ -14,6 +14,8 @@ import { createProtocol } from "vue-cli-plugin-electron-builder/lib";
 import installExtension, { VUEJS_DEVTOOLS } from "electron-devtools-installer";
 import { AppDetailsOptions } from "electron/main";
 const isDevelopment = process.env.NODE_ENV !== "production";
+
+const extendedContextMenu = require('electron-context-menu');
 
 // Scheme must be registered before the app is ready
 protocol.registerSchemesAsPrivileged([
@@ -36,9 +38,9 @@ async function createWindow() {
     },
   });
 
-  //if (!isDevelopment) {
-  //  win.setMenuBarVisibility(false);
-  //}
+  if (!isDevelopment) {
+    win.setMenuBarVisibility(false);
+  }
 
   if (process.env.WEBPACK_DEV_SERVER_URL) {
     // Load the url of the dev server if in development mode
@@ -51,7 +53,7 @@ async function createWindow() {
   }
 
   win.setTitle("SGPA - Gestion de classes de segpa")
-  win.setIcon('./assets/logo.png')
+  win.setIcon('./logo.png')
 }
 
 // Quit when all windows are closed.
@@ -82,6 +84,50 @@ app.on("ready", async () => {
     }
   }
   createWindow();
+
+  const electron = require('electron');
+  const remote = electron.remote;
+  const Menu = remote.Menu;
+
+  const InputMenu = Menu.buildFromTemplate([{
+    label: 'Undo',
+    role: 'undo',
+  }, {
+    label: 'Redo',
+    role: 'redo',
+  }, {
+    type: 'separator',
+  }, {
+    label: 'Cut',
+    role: 'cut',
+  }, {
+    label: 'Copy',
+    role: 'copy',
+  }, {
+    label: 'Paste',
+    role: 'paste',
+  }, {
+    type: 'separator',
+  }, {
+    label: 'Select all',
+    role: 'selectall',
+  },
+  ]);
+
+  document.body.addEventListener('contextmenu', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    let node = e.target;
+
+    while (node) {
+      if (node.nodeName.match(/^(input|textarea)$/i) || node.isContentEditable) {
+        InputMenu.popup(remote.getCurrentWindow());
+        break;
+      }
+      node = node.parentNode;
+    }
+  });
 });
 
 // *Boom* Create PDF
