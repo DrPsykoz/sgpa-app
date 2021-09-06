@@ -7,6 +7,7 @@ import GestionDomaines from '../views/GestionDomaines.vue';
 import Bilan from "../views/Bilan.vue";
 import BilanAnnuel from "../views/BilanAnnuel.vue"
 import FicheContrat from "../views/classes/evaluations/fiche_contrat/FicheContrat.vue";
+import Seance from '../views/classes/seances/Seance.vue'
 
 Vue.use(VueRouter);
 
@@ -16,6 +17,7 @@ const routes: Array<RouteConfig> = [
   { path: '/gestion_domaines', component: GestionDomaines },
   { path: '/:classe/evaluations/:evaluation', component: Evaluation },
   { path: '/:classe/evaluations/:evaluation/fiche_contrat', component: FicheContrat },
+  { path: '/:classe/seances/:seance/', component: Seance },
   { path: '/bilan/:classe/:trimestre/:annee', component: Bilan },
   { path: '/bilan_annuel/:classe/:annee', component: BilanAnnuel },
 ];

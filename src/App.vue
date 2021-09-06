@@ -4,10 +4,20 @@
   <v-app>
     <v-app-bar app color="secondary" dark class="no-print">
       <v-container class="d-flex">
-        <v-container class="d-flex">
+        <v-container class="d-flex align-center">
           <v-icon color="white" class="pr-3" large>local_library</v-icon>
-          <h1 class="pa-0 ma-0">SGPA</h1>
+          <v-tooltip bottom>
+            <template v-slot:activator="{ on, attrs }">
+              <h1 v-bind="attrs" v-on="on" class="pa-0 ma-0" placeholder="test">
+                APGES
+              </h1>
+            </template>
+            <span>
+              Aide a la Plannification et la Gestion des Eleves de Segpa
+            </span>
+          </v-tooltip>
         </v-container>
+
         <v-container class="d-flex pa-5 justify-end">
           <v-btn to="/classes" text class="rounded-0">
             <span class="mr-2">

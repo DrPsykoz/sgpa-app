@@ -1,5 +1,5 @@
 import { IClasse } from '@/interfaces';
-import { Component, Vue, Watch } from 'vue-property-decorator';
+import { Component, Vue } from 'vue-property-decorator';
 
 import DialogAjout from "@/components/General/DialogAjout.vue";
 

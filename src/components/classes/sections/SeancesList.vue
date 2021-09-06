@@ -5,6 +5,13 @@
         SEANCES
       </h2>
       <div class="d-flex">
+        <DialogItemData
+          title="Ajouter une seance"
+          buttonText="Nouvelle seance"
+          :getNewData="() => getNewSeance()"
+          :onConfirm="(data) => createSeance(data)"
+          :keysTranslate="keysTranslate"
+        />
         <v-btn
           class="rounded-0 ml-3"
           color="white"
@@ -42,10 +49,7 @@
               :buttonClass="'black--text ml-2 rounded-0'"
               :isTextButton="true"
             />
-            <btn-remove-list
-              :index="classe.sceances.indexOf(item)"
-              :list="classe.sceances"
-            />
+            <button-delete @click="() => deleteSeance(item)" />
           </td>
         </tr>
       </template>
@@ -56,10 +60,18 @@
 <script lang="ts">
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Component, Vue, Prop } from "vue-property-decorator";
-import { IClasse } from "@/interfaces";
+import { IClasse, ISeance } from "@/interfaces";
+import {
+  dispatchCreateSeance,
+  dispatchRemoveSeance,
+} from "@/store/main/actions";
+
+import DialogItemData from "@/components/global/dialogs/DialogItemData.vue";
 
 @Component({
-  components: {},
+  components: {
+    DialogItemData,
+  },
 })
 export default class SeancesList extends Vue {
   @Prop() public classe: IClasse;
@@ -71,5 +83,25 @@ export default class SeancesList extends Vue {
     { text: "Date de fin", value: "date_fin" },
     { text: "Actions", value: "actions" },
   ];
+
+  public keysTranslate = {
+    first_name: "Prenom",
+    last_name: "Nom",
+  };
+
+  public getNewSeance() {
+    return new ISeance();
+  }
+
+  public createSeance(seance: ISeance) {
+    dispatchCreateSeance(this.$store, { classe: this.classe, seance });
+  }
+
+  public removeSeance(seance: ISeance) {
+    dispatchRemoveSeance(this.$store, {
+      classe: this.classe,
+      seance: seance,
+    });
+  }
 }
 </script>

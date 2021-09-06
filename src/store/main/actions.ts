@@ -1,8 +1,8 @@
-import { ENotificationType, IChamp, IClasse, ICompetence, ICycle, IDomaine, IEleve, IEvaluation, INotification } from '@/interfaces';
+import { ENotificationType, IChamp, IClasse, ICompetence, ICycle, IDomaine, IEleve, IEvaluation, INotification, ISeance } from '@/interfaces';
 import { getStoreAccessors } from 'typesafe-vuex';
 import { ActionContext } from 'vuex';
 import { State } from '../state';
-import { commitAddNotification, commitClearNotifications, commitRemoveChamp, commitRemoveClasse, commitRemoveCompetence, commitRemoveCycle, commitRemoveDomaine, commitRemoveEleve, commitRemoveEvaluation, commitRemoveNotification, commitSetChamp, commitSetClasse, commitSetCompetence, commitSetCycle, commitSetDomaine, commitSetEleve, commitSetEvaluation } from './mutations';
+import { commitAddNotification, commitClearNotifications, commitRemoveChamp, commitRemoveClasse, commitRemoveCompetence, commitRemoveCycle, commitRemoveDomaine, commitRemoveEleve, commitRemoveEvaluation, commitRemoveNotification, commitRemoveSeance, commitSetChamp, commitSetClasse, commitSetCompetence, commitSetCycle, commitSetDomaine, commitSetEleve, commitSetEvaluation, commitSetSeance } from './mutations';
 import { MainState } from './state';
 import { v4 as uuidv4 } from 'uuid';
 import { readClasse } from './getters';
@@ -86,51 +86,58 @@ export const actions = {
         commitRemoveEleve(context, payload);
     },
 
+    /*
+     *  Cycles
+     */
     async actionCreateCycle(context: MainContext, payload: { cycle: ICycle }) {
         commitSetCycle(context, payload.cycle);
     },
-    async actionCreateDomaine(context: MainContext, payload: { cycle: ICycle, domaine: IDomaine }) {
-        commitSetDomaine(context, { cycle: payload.cycle, domaine: payload.domaine });
-    },
-    async actionCreateChamp(context: MainContext, payload: { cycle: ICycle, domaine: IDomaine, champ: IChamp }) {
-        commitSetChamp(context, { cycle: payload.cycle, domaine: payload.domaine, champ: payload.champ });
-    },
-    async actionCreateCompetence(context: MainContext, payload: { cycle: ICycle, domaine: IDomaine, champ: IChamp, competence: ICompetence }) {
-        commitSetCompetence(context, { cycle: payload.cycle, domaine: payload.domaine, champ: payload.champ, competence: payload.competence });
-    },
-
     async actionRemoveCycle(context: MainContext, payload: { cycle: ICycle }) {
         commitRemoveCycle(context, payload.cycle);
+    },
+
+    /*
+     *  Domaines
+     */
+    async actionCreateDomaine(context: MainContext, payload: { cycle: ICycle, domaine: IDomaine }) {
+        commitSetDomaine(context, { cycle: payload.cycle, domaine: payload.domaine });
     },
     async actionRemoveDomaine(context: MainContext, payload: { cycle: ICycle, domaine: IDomaine }) {
         commitRemoveDomaine(context, { cycle: payload.cycle, domaine: payload.domaine });
     },
+
+    /*
+     *  Champs
+     */
+    async actionCreateChamp(context: MainContext, payload: { cycle: ICycle, domaine: IDomaine, champ: IChamp }) {
+        commitSetChamp(context, { cycle: payload.cycle, domaine: payload.domaine, champ: payload.champ });
+    },
     async actionRemoveChamp(context: MainContext, payload: { cycle: ICycle, domaine: IDomaine, champ: IChamp }) {
         commitRemoveChamp(context, { cycle: payload.cycle, domaine: payload.domaine, champ: payload.champ });
+    },
+
+    /*
+     *  Competences
+     */
+    async actionCreateCompetence(context: MainContext, payload: { cycle: ICycle, domaine: IDomaine, champ: IChamp, competence: ICompetence }) {
+        commitSetCompetence(context, { cycle: payload.cycle, domaine: payload.domaine, champ: payload.champ, competence: payload.competence });
     },
     async actionRemoveCompetence(context: MainContext, payload: { cycle: ICycle, domaine: IDomaine, champ: IChamp, competence: ICompetence }) {
         commitRemoveCompetence(context, { cycle: payload.cycle, domaine: payload.domaine, champ: payload.champ, competence: payload.competence });
     },
 
-
+    /*
+     *  Seances
+     */
+    async actionCreateSeance(context: MainContext, payload: { classe: IClasse, seance: ISeance }) {
+        commitSetSeance(context, { classe: payload.classe, seance: payload.seance });
+    },
+    async actionRemoveSeance(context: MainContext, payload: { classe: IClasse, seance: ISeance }) {
+        commitRemoveSeance(context, { classe: payload.classe, seance: payload.seance });
+    },
 };
 
 const { dispatch } = getStoreAccessors<MainState, State>('');
-
-
-export const dispatchCreateCycle = dispatch(actions.actionCreateCycle);
-export const dispatchCreateDomaine = dispatch(actions.actionCreateDomaine);
-export const dispatchCreateChamp = dispatch(actions.actionCreateChamp);
-export const dispatchCreateCompetence = dispatch(actions.actionCreateCompetence);
-
-
-export const dispatchRemoveCycle = dispatch(actions.actionRemoveCycle);
-export const dispatchRemoveDomaine = dispatch(actions.actionRemoveDomaine);
-export const dispatchRemoveChamp = dispatch(actions.actionRemoveChamp);
-export const dispatchRemoveCompetence = dispatch(actions.actionRemoveCompetence);
-
-
-
 
 // Notifications
 export const dispatchAddNotification = dispatch(actions.actionAddNotification);
@@ -147,3 +154,23 @@ export const dispatchRemoveEvaluation = dispatch(actions.actionRemoveEvaluation)
 // Eleves
 export const dispatchCreateEleve = dispatch(actions.actionCreateEleve);
 export const dispatchRemoveEleve = dispatch(actions.actionRemoveEleve);
+
+// Cycles
+export const dispatchCreateCycle = dispatch(actions.actionCreateCycle);
+export const dispatchRemoveCycle = dispatch(actions.actionRemoveCycle);
+
+// Domaines
+export const dispatchCreateDomaine = dispatch(actions.actionCreateDomaine);
+export const dispatchRemoveDomaine = dispatch(actions.actionRemoveDomaine);
+
+// Champs
+export const dispatchCreateChamp = dispatch(actions.actionCreateChamp);
+export const dispatchRemoveChamp = dispatch(actions.actionRemoveChamp);
+
+// Competences
+export const dispatchCreateCompetence = dispatch(actions.actionCreateCompetence);
+export const dispatchRemoveCompetence = dispatch(actions.actionRemoveCompetence);
+
+// Seances
+export const dispatchCreateSeance = dispatch(actions.actionCreateSeance);
+export const dispatchRemoveSeance = dispatch(actions.actionRemoveSeance);

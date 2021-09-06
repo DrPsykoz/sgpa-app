@@ -1,9 +1,7 @@
-import { ENotificationType, IChamp, IClasse, ICompetence, ICycle, IDomaine, IEleve, IEvaluation, INotification } from '@/interfaces';
+import { IChamp, IClasse, ICompetence, ICycle, IDomaine, IEleve, IEvaluation, INotification, ISeance } from '@/interfaces';
 import { MainState } from './state';
 import { getStoreAccessors } from 'typesafe-vuex';
 import { State } from '../state';
-import { Main } from 'electron';
-import { dispatchAddNotification } from './actions';
 
 export const mutations = {
     setCurrentState(state: MainState, payload: MainState) {
@@ -160,7 +158,25 @@ export const mutations = {
     },
     clearNotifications(state: MainState) {
         state.notifications = [];
-    }
+    },
+
+    /*
+     * Seances
+     */
+    setSeance(state: MainState, payload: { classe: IClasse, seance: ISeance }) {
+        const classe = state.classes.find((x) => x.id !== payload.classe.id);
+        if (classe) {
+            const seances = classe.seances.filter((x) => x.id !== payload.seance.id);
+            seances.push(payload.seance);
+            classe.seances = seances;
+        }
+    },
+    removeSeance(state: MainState, payload: { classe: IClasse, seance: ISeance }) {
+        const classe = state.classes.find((x) => x.id !== payload.classe.id);
+        if (classe) {
+            classe.seances = classe.seances.filter((x) => x.id !== payload.seance.id);
+        }
+    },
 };
 
 const { commit } = getStoreAccessors<MainState, State>('');
@@ -201,3 +217,7 @@ export const commitRemoveChamp = commit(mutations.removeChamp);
 // Competences
 export const commitSetCompetence = commit(mutations.setCompetence);
 export const commitRemoveCompetence = commit(mutations.removeCompetence);
+
+// Seances
+export const commitSetSeance = commit(mutations.setSeance);
+export const commitRemoveSeance = commit(mutations.removeSeance);

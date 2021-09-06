@@ -1,4 +1,6 @@
+import { Data } from 'electron/main';
 import { v4 as uuidv4 } from 'uuid';
+
 export class IIdentifiedItem {
     id: string = uuidv4();
 }
@@ -12,6 +14,7 @@ export class IClasse extends IIdentifiedItem {
     name = '';
     eleves: IEleve[] = [];
     evaluations: IEvaluation[] = [];
+    seances: ISeance[] = [];
 
     public constructor(init?: Partial<IClasse>) {
         super();
@@ -147,4 +150,17 @@ export interface IGlobalUtilities {
 
 export interface IElevesUtilities {
     getMoyenne: (classe: IClasse, eleve: IEleve) => number;
+}
+
+export class ISeance extends IIdentifiedItem {
+    date_debut: Date = new Date();
+    date_fin: Date = new Date();
+    // Liste d'uuid d'eleves
+    absences: string[] = [];
+    cahier_texte = '';
+
+    public constructor(init?: Partial<ISeance>) {
+        super();
+        Object.assign(this, init);
+    }
 }
