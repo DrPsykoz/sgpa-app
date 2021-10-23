@@ -72,54 +72,53 @@
               </li>
             </ul>
           </td>
-          <td>
-            <div class="d-flex align-center">
-              <v-btn
-                text
-                class="green--text ml-2 rounded-0"
-                :to="`/${classe.id}/evaluations/${item.id}`"
-              >
-                Noter
-              </v-btn>
-              <DialogItemData
-                title="Modifier une evaluation"
-                buttonText="Modifier"
-                :onConfirm="(data) => null"
-                :defaultData="item"
-              >
-                <template v-slot:key-trimestre="{ item }">
-                  <v-select
-                    :items="trimestres"
-                    label="Choix du trimestre"
-                    v-model="item.trimestre"
-                  />
-                </template>
-                <template v-slot:key-annee="{ item }">
-                  <v-select
-                    :items="annees"
-                    label="Choix de l'année"
-                    v-model="item.annee"
-                  />
-                </template>
-                <template v-slot:key-competences="{ item }">
-                  <v-select
-                    :items="competences"
-                    label="Choix des competences"
-                    item-text="name"
-                    item-value="id"
-                    v-model="item.competences"
-                    multiple
-                  />
-                </template>
-                <template slot="key-notes">
-                  <span></span>
-                </template>
-                <template slot="key-fiche_contrat">
-                  <span></span>
-                </template>
-              </DialogItemData>
-              <button-delete @click="() => deleteEvaluation(item)" />
-            </div>
+          <td class="d-flex align-center">
+            <v-btn
+              text
+              class="green--text rounded-0"
+              :to="`/${classe.id}/evaluations/${item.id}`"
+            >
+              Noter
+            </v-btn>
+            <DialogItemData
+              title="Modifier une evaluation"
+              buttonText="Modifier"
+              :onConfirm="(data) => null"
+              :defaultData="item"
+            >
+              <template v-slot:key-trimestre="{ item }">
+                <v-select
+                  :items="trimestres"
+                  label="Choix du trimestre"
+                  v-model="item.trimestre"
+                />
+              </template>
+              <template v-slot:key-annee="{ item }">
+                <v-select
+                  :items="annees"
+                  label="Choix de l'année"
+                  v-model="item.annee"
+                />
+              </template>
+              <template v-slot:key-competences="{ item }">
+                <v-select
+                  :items="competences"
+                  label="Choix des competences"
+                  item-text="name"
+                  item-value="id"
+                  v-model="item.competences"
+                  multiple
+                >
+                </v-select>
+              </template>
+              <template slot="key-notes">
+                <span></span>
+              </template>
+              <template slot="key-fiche_contrat">
+                <span></span>
+              </template>
+            </DialogItemData>
+            <button-delete @click="() => deleteEvaluation(item)" />
           </td>
         </tr>
       </template>

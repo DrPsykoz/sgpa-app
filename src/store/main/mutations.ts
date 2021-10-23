@@ -1,4 +1,4 @@
-import { IChamp, IClasse, ICompetence, ICycle, IDomaine, IEleve, IEvaluation, INotification, ISeance } from '@/interfaces';
+import { ENotificationType, IChamp, IClasse, ICompetence, ICycle, IDomaine, IEleve, IEvaluation, INotification, ISeance } from '@/interfaces';
 import { MainState } from './state';
 import { getStoreAccessors } from 'typesafe-vuex';
 import { State } from '../state';
@@ -164,15 +164,17 @@ export const mutations = {
      * Seances
      */
     setSeance(state: MainState, payload: { classe: IClasse, seance: ISeance }) {
-        const classe = state.classes.find((x) => x.id !== payload.classe.id);
+        const classe = state.classes.find((x) => x.id === payload.classe.id);
         if (classe) {
             const seances = classe.seances.filter((x) => x.id !== payload.seance.id);
             seances.push(payload.seance);
             classe.seances = seances;
+        } else {
+            throw new Error("Classe introuvable.");
         }
     },
     removeSeance(state: MainState, payload: { classe: IClasse, seance: ISeance }) {
-        const classe = state.classes.find((x) => x.id !== payload.classe.id);
+        const classe = state.classes.find((x) => x.id === payload.classe.id);
         if (classe) {
             classe.seances = classe.seances.filter((x) => x.id !== payload.seance.id);
         }

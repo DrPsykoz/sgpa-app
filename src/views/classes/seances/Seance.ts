@@ -7,8 +7,6 @@ import { readClasse, readCompetence } from '@/store/main/getters';
 import ElevesList from '@/components/classes/sections/ElevesList.vue';
 import EvaluationsList from '@/components/classes/sections/EvaluationsList.vue';
 import SeancesList from '@/components/classes/sections/SeancesList.vue';
-import { INote } from '@/interfaces';
-
 @Component({
     components: {
         DialogAjout, ElevesList, EvaluationsList, SeancesList
@@ -16,25 +14,44 @@ import { INote } from '@/interfaces';
 })
 export default class Seance extends Vue {
 
-    public classe_id = '';
-    public seance_id = '';
-
-    public isLegendDisplayed = false;
+    public headers = [
+        {
+            text: 'Eleve',
+            value: 'eleve'
+        },
+        {
+            text: 'Absent',
+            value: 'is_absent'
+        }
+    ]
 
     get classe() {
-        return readClasse(this.$store)(this.classe_id);
+        return readClasse(this.$store)(this.$route.params.classe);
     }
 
     get seance() {
-        return this.classe?.seances.find((x) => x.id === this.seance_id);
+        return this.classe?.seances.find((x) => x.id === this.$route.params.seance);
+    }
+
+    get eleves() {
+        return this.classe?.eleves;
     }
 
     get competence() {
         return (id: string) => readCompetence(this.$store)(id);
     }
 
-    public created() {
-        this.classe_id = this.$route.params.classe;
-        this.seance_id = this.$route.params.seance;
+    public isAbsent(id: string) {
+        return this.seance?.absences.includes(id);
+    }
+
+    public toggleAbsence(id: string) {
+        if (this.seance) {
+            if (this.isAbsent(id)) {
+                this.seance.absences = this.seance.absences.filter((x) => x !== id);
+            } else {
+                this.seance.absences.push(id);
+            }
+        }
     }
 }

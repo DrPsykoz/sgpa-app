@@ -28,7 +28,16 @@
         <v-form>
           <template v-for="key in getKeys(data)">
             <slot v-if="key !== 'id'" :name="`key-${key}`" :item="data">
+              <v-datetime-picker
+                v-if="typeof data[key].getTime === 'function'"
+                v-model="data[key]"
+                :label="keysTranslate ? keysTranslate[key] || key : key"
+                :timePickerProps="{ format: '24hr' }"
+                clearText="Annuler"
+              />
+
               <v-text-field
+                v-else
                 :key="key"
                 v-model="data[key]"
                 :label="keysTranslate ? keysTranslate[key] || key : key"
@@ -63,6 +72,9 @@ export default class DialogItemData<T extends IIdentifiedItem> extends Vue {
   @Prop() public readonly color: string;
 
   public defaultDataCopy: T | null = null;
+
+  public datePickerOpen: Record<string, boolean> = {};
+  public datePickerData: Record<string, Date> = {};
 
   public value = false;
   public data: T | null = null;

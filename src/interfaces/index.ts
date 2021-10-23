@@ -33,6 +33,7 @@ export class IEleve extends IIdentifiedItem {
 }
 
 export class IEvaluation extends IIdentifiedItem {
+    display_name: '';
     trimestre: ETrimestre = ETrimestre.Premier;
     annee: EAnnee = EAnnee.Quatrieme;
     competences: string[] = [];

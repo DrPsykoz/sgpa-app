@@ -9,7 +9,7 @@ import { ENotificationType, INotification } from './interfaces';
 @Component
 export default class App extends Vue {
 
-  public data = {};
+  public data: MainState = { classes: [], cycles: [], notifications: [] };
   public saveAlert = false;
 
   get notifications() {
@@ -45,7 +45,31 @@ export default class App extends Vue {
   }
 
   public mounted() {
-    this.data = JSON.parse(this.$GlobalUtils.readFromFile("./static/data.json"));
+    this.data = JSON.parse(this.$GlobalUtils.readFromFile("./static/data.json")) as MainState;
+
+    /*
+     *   Ajout des seances
+     *   
+     *   Creation de la liste des seances pour chaque classe si elle n'existe pas encore pour eviter les erreurs.
+     */
+    this.data.classes.forEach((classe) => {
+      if (!classe.seances) {
+        this.$set(classe, 'seances', []);
+      }
+    });
+
+
+    /*
+     *    Mise a jour des evalutations
+     *
+     *    Ajout d'un nom personnalisé pour les evaluations
+     */
+    this.data.classes.forEach((classe) => {
+      classe.evaluations.forEach((evaluation) => {
+        evaluation.display_name = '';
+      });
+    });
+
     commitSetCurrentState(this.$store, this.data as MainState);
     commitClearNotifications(this.$store);
   }

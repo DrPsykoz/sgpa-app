@@ -11,6 +11,7 @@
           :getNewData="() => getNewSeance()"
           :onConfirm="(data) => createSeance(data)"
           :keysTranslate="keysTranslate"
+          :enabledKeys="['date_debut', 'date_fin']"
         />
         <v-btn
           class="rounded-0 ml-3"
@@ -31,24 +32,29 @@
     >
       <template v-slot:item="{ item }">
         <tr>
-          {{
-            item
-          }}
           <td>
-            {{ item.date_debut.toLocaleString("fr-FR") }}
+            {{ new Date(item.date_debut).toLocaleString("fr-FR") }}
           </td>
           <td>
-            {{ item.date_fin.toLocaleString("fr-FR") }}
+            {{ new Date(item.date_fin).toLocaleString("fr-FR") }}
           </td>
-          <td>
-            <DialogAjoutEvaluation
-              :editEvaluation="item"
-              :classe="classe"
-              :cycles="cycles"
-              :buttonText="'Modifier'"
-              :buttonClass="'black--text ml-2 rounded-0'"
-              :isTextButton="true"
+          <td class="d-flex align-center">
+            <v-btn
+              text
+              class="green--text rounded-0"
+              :to="`/${classe.id}/seances/${item.id}`"
+            >
+              Voir
+            </v-btn>
+            <DialogItemData
+              title="Modifier une seance"
+              buttonText="Modifier"
+              :onConfirm="(data) => null"
+              :keysTranslate="keysTranslate"
+              :enabledKeys="['date_debut', 'date_fin']"
+              :defaultData="item"
             />
+
             <button-delete @click="() => deleteSeance(item)" />
           </td>
         </tr>
@@ -85,8 +91,8 @@ export default class SeancesList extends Vue {
   ];
 
   public keysTranslate = {
-    first_name: "Prenom",
-    last_name: "Nom",
+    date_debut: "Date de début",
+    date_fin: "Date de fin",
   };
 
   public getNewSeance() {

@@ -130,7 +130,17 @@ export const actions = {
      *  Seances
      */
     async actionCreateSeance(context: MainContext, payload: { classe: IClasse, seance: ISeance }) {
-        commitSetSeance(context, { classe: payload.classe, seance: payload.seance });
+        try {
+            console.log(payload.classe)
+            commitSetSeance(context, { classe: payload.classe, seance: payload.seance });
+        } catch (error) {
+            commitAddNotification(context, {
+                notification: new INotification({
+                    text: `Erreur lors de la creation/modification de la seance. ${error}`,
+                    type: ENotificationType.ERROR,
+                })
+            })
+        }
     },
     async actionRemoveSeance(context: MainContext, payload: { classe: IClasse, seance: ISeance }) {
         commitRemoveSeance(context, { classe: payload.classe, seance: payload.seance });
