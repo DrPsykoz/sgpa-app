@@ -55,8 +55,8 @@ async function createWindow() {
     autoUpdater.checkForUpdatesAndNotify();
   }
 
-  win.setTitle("SGPA - Gestion de classes de segpa")
-  win.setIcon('./logo.png')
+  win.setTitle(`SGPA - Gestion de classes de segpa ${app.getVersion()}`);
+  win.setIcon('./logo.png');
 }
 
 // Quit when all windows are closed.
