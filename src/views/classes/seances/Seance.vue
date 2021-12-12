@@ -23,13 +23,23 @@
       </v-chip>
     </v-container>
     <v-container secondary>
-      <v-container class="d-flex pa-0 justify-space-between">
+      <v-container class="d-flex pa-0 justify-space-between flex-column">
         <h2
           class="mb-2 ml-1 white--text"
           style="font-weight: 700; letter-spacing: 1px"
         >
           ABSENCES
         </h2>
+        <v-container class="white mb-2 d-flex justify-center">
+          <div class="mx-2 d-flex align-center justify-center">
+            <v-icon color="green"> mdi-check </v-icon>
+            <span>Present</span>
+          </div>
+          <div class="mx-2 d-flex align-center justify-center">
+            <v-icon color="red">mdi-close</v-icon>
+            <span class="font-">Absent</span>
+          </div>
+        </v-container>
       </v-container>
       <v-data-table
         v-if="classe && seance"
@@ -42,11 +52,15 @@
         <template v-slot:item="{ item }">
           <tr>
             <td>{{ `${item.first_name} ${item.last_name}` }}</td>
-            <td class="d-flex align-center">
-              <v-checkbox
-                :value="isAbsent(item.id)"
-                @click="toggleAbsence(item.id)"
-              />
+            <td
+              class="d-flex align-center"
+              @click="toggleAbsence(item.id)"
+              style="cursor: pointer"
+            >
+              <v-icon v-if="isAbsent(item.id)" color="green">
+                mdi-check
+              </v-icon>
+              <v-icon v-else color="red">mdi-close</v-icon>
             </td>
           </tr>
         </template>

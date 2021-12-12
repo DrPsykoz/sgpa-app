@@ -20,7 +20,7 @@ export default class Seance extends Vue {
             value: 'eleve'
         },
         {
-            text: 'Absent',
+            text: 'Presence',
             value: 'is_absent'
         }
     ]

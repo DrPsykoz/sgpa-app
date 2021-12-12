@@ -2,7 +2,12 @@ import { IClasse, IEleve, IEvaluation, INote } from "@/interfaces"
 
 export const ElevesUtilities = {
     getMoyenne: (classe: IClasse, eleve: IEleve) => {
-        return 0;
+        const notes = classe.evaluations
+            .flatMap((evaluation) => evaluation.notes)
+            .filter((note) => note.eleve_id === eleve.id)
+            .filter((x) => x.note > 0);
+
+        return notes.map((note) => note.note).reduce((a, b) => a + b) / notes.length;
     },
 
     getOrCreateNotation: (evaluation: IEvaluation, eleve: IEleve, competence_id: string) => {

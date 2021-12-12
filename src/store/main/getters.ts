@@ -1,7 +1,7 @@
 import { MainState } from './state';
 import { getStoreAccessors } from 'typesafe-vuex';
 import { State } from '../state';
-import { ICompetence } from '@/interfaces';
+import { IClasse, ICompetence, IEleve } from '@/interfaces';
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib';
 
 export const getters = {
@@ -31,11 +31,7 @@ export const getters = {
         })
         return domaineToReturn;
     },
-
-
     notifications: (state: MainState) => state.notifications,
-
-
 };
 
 const { read } = getStoreAccessors<MainState, State>('');

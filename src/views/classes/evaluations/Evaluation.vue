@@ -43,24 +43,11 @@
         class="d-flex justify-space-around mb-2 mt-1"
         v-if="isLegendDisplayed"
       >
-        <v-chip class="ma-2" style="font-weight: 500" :color="getNote(0).color">
-          {{ getNote(0).name }}
-        </v-chip>
-        <v-chip class="ma-2" style="font-weight: 500" :color="getNote(1).color">
-          {{ getNote(1).name }}
-        </v-chip>
-        <v-chip class="ma-2" style="font-weight: 500" :color="getNote(2).color">
-          {{ getNote(2).name }}
-        </v-chip>
-        <v-chip class="ma-2" style="font-weight: 500" :color="getNote(3).color">
-          {{ getNote(3).name }}
-        </v-chip>
-        <v-chip class="ma-2" style="font-weight: 500" :color="getNote(4).color">
-          {{ getNote(4).name }}
-        </v-chip>
-        <v-chip class="ma-2" style="font-weight: 500" :color="getNote(5).color">
-          {{ getNote(5).name }}
-        </v-chip>
+        <template v-for="i in 6" >
+          <v-chip class="ma-2" style="font-weight: 500" :key="i" :set="noteDetail = $GlobalUtils.getNoteDetails(i - 1)" :color="noteDetail.color">
+            {{ noteDetail.name }}
+          </v-chip>
+        </template>
       </v-container>
     </v-container>
     <v-container secondary>

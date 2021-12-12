@@ -40,6 +40,8 @@
               :color="getNote(getMoyenne(item)).color"
             >
               {{ getNote(getMoyenne(item)).name }}
+
+              {{ $ElevesUtils.getMoyenne(classe, item)}}
             </v-chip>
           </td>
           <td class="d-flex align-center">

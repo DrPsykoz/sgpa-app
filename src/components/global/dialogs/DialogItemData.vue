@@ -29,7 +29,7 @@
           <template v-for="key in getKeys(data)">
             <slot v-if="key !== 'id'" :name="`key-${key}`" :item="data">
               <v-datetime-picker
-                v-if="typeof data[key].getTime === 'function'"
+                v-if="datesKeys.includes(key)"
                 v-model="data[key]"
                 :label="keysTranslate ? keysTranslate[key] || key : key"
                 :timePickerProps="{ format: '24hr' }"
@@ -75,6 +75,8 @@ export default class DialogItemData<T extends IIdentifiedItem> extends Vue {
 
   public datePickerOpen: Record<string, boolean> = {};
   public datePickerData: Record<string, Date> = {};
+
+  public datesKeys = ['date_debut', 'date_fin'];
 
   public value = false;
   public data: T | null = null;

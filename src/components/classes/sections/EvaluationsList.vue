@@ -9,6 +9,7 @@
           title="Nouvelle evaluation"
           :getNewData="() => getNewEvaluation()"
           :onConfirm="(data) => createEvaluation(data)"
+          :keysTranslate="keysTranslate"
         >
           <template v-slot:key-trimestre="{ item }">
             <v-select
@@ -60,6 +61,7 @@
     >
       <template v-slot:item="{ item }">
         <tr>
+          <td>{{ item.display_name }}</td>
           <td>{{ item.annee }}</td>
           <td>{{ item.trimestre }}</td>
           <td>
@@ -85,6 +87,7 @@
               buttonText="Modifier"
               :onConfirm="(data) => null"
               :defaultData="item"
+              :keysTranslate="keysTranslate"
             >
               <template v-slot:key-trimestre="{ item }">
                 <v-select
@@ -154,11 +157,16 @@ export default class EvalutationsList extends Vue {
   public isDiplayed = true;
 
   public headers = [
+    { text: "Intitulé", value: "display_name" },
     { text: "Année", value: "annee" },
     { text: "Trimestre", value: "trimestre" },
     { text: "Competences evaluées", value: "competences" },
     { text: "Actions", value: "actions", sortable: false },
   ];
+
+  public keysTranslate = {
+    'display_name': "Intitulé"
+  }
 
   public trimestres = Object.values(ETrimestre);
   public annees = Object.values(EAnnee);
