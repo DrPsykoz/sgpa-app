@@ -37,11 +37,10 @@
             <v-chip
               style="font-weight: 500"
               class="ma-2"
-              :color="getNote(getMoyenne(item)).color"
+              :set="(moyenne = $ElevesUtils.getMoyenne(classe, item))"
+              :color="getNote(moyenne).color"
             >
-              {{ getNote(getMoyenne(item)).name }}
-
-              {{ $ElevesUtils.getMoyenne(classe, item)}}
+              {{ getNote(moyenne).name }}
             </v-chip>
           </td>
           <td class="d-flex align-center">

@@ -27,10 +27,8 @@
           </template>
           <template v-slot:key-competences="{ item }">
             <v-select
-              :items="competences"
+              :items="getCompetencesList()"
               label="Choix des competences"
-              item-text="name"
-              item-value="id"
               v-model="item.competences"
               multiple
             />
@@ -105,10 +103,8 @@
               </template>
               <template v-slot:key-competences="{ item }">
                 <v-select
-                  :items="competences"
+                  :items="getCompetencesList()"
                   label="Choix des competences"
-                  item-text="name"
-                  item-value="id"
                   v-model="item.competences"
                   multiple
                 >
@@ -132,7 +128,7 @@
 <script lang="ts">
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Component, Vue, Prop } from "vue-property-decorator";
-import { EAnnee, ETrimestre, IClasse, IEvaluation } from "@/interfaces";
+import { EAnnee, ETrimestre, IClasse, ICompetence, IEvaluation } from "@/interfaces";
 import {
   dispatchCreateEvaluation,
   dispatchRemoveEvaluation,
@@ -187,7 +183,30 @@ export default class EvalutationsList extends Vue {
     return new IEvaluation();
   }
 
+  public getCompetencesList(){
+    const mapped: any = [];
+
+    this.cycles.forEach((cycle) => {
+      cycle.domaines.forEach((domaine) => {
+        domaine.champs.forEach((champ) => {
+          mapped.push({
+            header: `${cycle.name} ${domaine.name} ${champ.name}`,
+          });
+          champ.competences.forEach((x) => {
+            mapped.push({
+              text: x.name,
+              value: x.id,
+            });
+          });
+        });
+      });
+    });
+
+    return mapped;
+  }
+
   public createEvaluation(evaluation: IEvaluation) {
+    console.log(evaluation)
     dispatchCreateEvaluation(this.$store, {
       classe: this.classe,
       evaluation: evaluation,

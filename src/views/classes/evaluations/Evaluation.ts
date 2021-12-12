@@ -7,7 +7,7 @@ import { readClasse, readCompetence } from '@/store/main/getters';
 import ElevesList from '@/components/classes/sections/ElevesList.vue';
 import EvaluationsList from '@/components/classes/sections/EvaluationsList.vue';
 import SeancesList from '@/components/classes/sections/SeancesList.vue';
-import { INote } from '@/interfaces';
+import { IEleve, INote } from '@/interfaces';
 
 @Component({
     components: {
@@ -48,7 +48,7 @@ export default class Evaluation extends Vue {
     }
 
     public getRows() {
-        const rows: any[] = [];
+        const rows: { eleve: IEleve }[] = [];
 
         this.classe?.eleves.forEach((eleve) => {
             const row = {
