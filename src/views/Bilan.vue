@@ -120,7 +120,6 @@ export default {
       let domainesIDs = this.getCompetences.reduce((x) => {
         x.cycleID, x.domaineID;
       });
-      console.log(domainesIDs);
     },
     getNotes() {
       let notesList = [];

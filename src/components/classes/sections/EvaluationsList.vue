@@ -53,7 +53,7 @@
     <v-data-table
       :headers="headers"
       :items="classe.evaluations"
-      :items-per-page="-1"
+      :items-per-page="15"
       class="elevation-1 rounded-0 mt-1 mb-2"
       v-if="isDiplayed"
     >
@@ -206,7 +206,6 @@ export default class EvalutationsList extends Vue {
   }
 
   public createEvaluation(evaluation: IEvaluation) {
-    console.log(evaluation)
     dispatchCreateEvaluation(this.$store, {
       classe: this.classe,
       evaluation: evaluation,

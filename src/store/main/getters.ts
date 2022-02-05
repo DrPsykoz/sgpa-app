@@ -32,6 +32,7 @@ export const getters = {
         return domaineToReturn;
     },
     notifications: (state: MainState) => state.notifications,
+    selectedClasse: (state: MainState) => state.classes.find((x) => x.id === state.selected_classe_uuid),
 };
 
 const { read } = getStoreAccessors<MainState, State>('');
@@ -41,6 +42,7 @@ export const readCurrentState = read(getters.state);
 // Classes
 export const readClasses = read(getters.classes);
 export const readClasse = read(getters.classe);
+export const readSelectedClasse = read(getters.selectedClasse);
 
 export const readCycles = read(getters.cycles);
 

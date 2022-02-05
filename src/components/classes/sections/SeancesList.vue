@@ -26,9 +26,11 @@
     <v-data-table
       :headers="headers"
       :items="classe.seances"
-      :items-per-page="-1"
+      :items-per-page="15"
       class="elevation-1 rounded-0 mt-1 mb-2"
       v-if="isDiplayed"
+      :sort-by.sync="sortBy"
+      :sort-desc.sync="sortDesc"
     >
       <template v-slot:item="{ item }">
         <tr>
@@ -83,6 +85,8 @@ export default class SeancesList extends Vue {
   @Prop() public classe: IClasse;
 
   public isDiplayed = true;
+  public sortBy = 'date_debut';
+  public sortDesc = true;
 
   public headers = [
     { text: "Date de début", value: "date_debut" },

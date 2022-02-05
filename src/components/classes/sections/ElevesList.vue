@@ -25,7 +25,7 @@
     <v-data-table
       :headers="headers"
       :items="classe.eleves"
-      :items-per-page="-1"
+      :items-per-page="15"
       class="elevation-1 rounded-0 mb-2 mt-1"
       v-if="isDiplayed"
     >
@@ -95,7 +95,6 @@ export default class ElevesList extends Vue {
   }
 
   public createEleve(eleve: IEleve) {
-    console.log(eleve);
     dispatchCreateEleve(this.$store, { classe: this.classe, eleve });
   }
 

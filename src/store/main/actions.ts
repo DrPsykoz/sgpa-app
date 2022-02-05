@@ -35,6 +35,7 @@ export const actions = {
         classe.name = payload.name;
         classe.eleves = [];
         classe.evaluations = [];
+        classe.seances = [];
         commitSetClasse(context, classe);
     },
     async actionRemoveClasse(context: MainContext, payload: { id: any }) {
@@ -131,7 +132,6 @@ export const actions = {
      */
     async actionCreateSeance(context: MainContext, payload: { classe: IClasse, seance: ISeance }) {
         try {
-            console.log(payload.classe)
             commitSetSeance(context, { classe: payload.classe, seance: payload.seance });
         } catch (error) {
             commitAddNotification(context, {

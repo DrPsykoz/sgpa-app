@@ -9,7 +9,7 @@ import { ENotificationType, INotification } from './interfaces';
 @Component
 export default class App extends Vue {
 
-  public data: MainState = { classes: [], cycles: [], notifications: [] };
+  public data: MainState = { classes: [], cycles: [], notifications: [], selected_classe_uuid: '' };
   public saveAlert = false;
 
   get notifications() {

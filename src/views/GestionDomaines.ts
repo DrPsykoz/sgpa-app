@@ -44,6 +44,5 @@ export default class GestionDomaines extends Vue {
 
     public mounted() {
         window.scrollTo(0, 0);
-        console.log(this.cycles)
     }
 }

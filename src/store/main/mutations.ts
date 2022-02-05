@@ -32,6 +32,7 @@ export const mutations = {
         state.cycles = cycles;
     },
     removeCycle(state: MainState, payload: ICycle) { state.cycles = state.cycles.filter((x) => x.id !== payload.id); },
+    setSelectedClasse(state: MainState, payload: IClasse | null) { state.selected_classe_uuid = payload ? payload.id : ''; },
 
     /*
      *   Domaines
@@ -122,9 +123,6 @@ export const mutations = {
         const classe = state.classes.find((x) => x.id === payload.classe.id);
         if (classe) {
             classe.eleves = classe.eleves.filter((x) => x.id !== payload.eleve_id);
-            console.log(classe.eleves);
-        } else {
-            console.log('classe not found')
         }
     },
 
@@ -202,6 +200,7 @@ export const commitRemoveEleve = commit(mutations.removeEleve);
 export const commitSetClasses = commit(mutations.setClasses);
 export const commitSetClasse = commit(mutations.setClasse);
 export const commitRemoveClasse = commit(mutations.removeClasse);
+export const commitSetSelectedClasse = commit(mutations.setSelectedClasse);
 
 // Cycles
 export const commitSetCycles = commit(mutations.setCycles);

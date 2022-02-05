@@ -21,7 +21,7 @@
             ? 'ma-1 mr-2 rounded-lg primary'
             : 'ma-1 mr-2 rounded-0'
         "
-        @click="current_classe = classe"
+        @click="selectClasse(classe)"
       >
         {{ classe.name === "" ? "#" + classe.id : classe.name }}
       </v-btn>

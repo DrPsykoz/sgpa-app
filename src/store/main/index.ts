@@ -7,6 +7,7 @@ const defaultState: MainState = {
   classes: [],
   cycles: [],
   notifications: [],
+  selected_classe_uuid: '',
 };
 
 export const mainModule = {

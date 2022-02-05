@@ -3,12 +3,13 @@ import { Component, Vue } from 'vue-property-decorator';
 
 import DialogAjout from "@/components/General/DialogAjout.vue";
 
-import { readClasses, readCycles } from '@/store/main/getters';
+import { readClasses, readCycles, readSelectedClasse } from '@/store/main/getters';
 import { dispatchCreateClasse, dispatchRemoveClasse } from '@/store/main/actions';
 
 import ElevesList from '@/components/classes/sections/ElevesList.vue';
 import EvaluationsList from '@/components/classes/sections/EvaluationsList.vue';
 import SeancesList from '@/components/classes/sections/SeancesList.vue';
+import { commitSetSelectedClasse } from '@/store/main/mutations';
 
 @Component({
   components: {
@@ -27,7 +28,6 @@ export default class Classes extends Vue {
     seances: true,
   };
 
-  public current_classe: IClasse | null = this.classes[0] || null;
   public dialogAjoutEleve = false;
 
   get classes() {
@@ -38,11 +38,19 @@ export default class Classes extends Vue {
     return readCycles(this.$store);
   }
 
+  get current_classe() {
+    return readSelectedClasse(this.$store);
+  }
+
+  public selectClasse(classe){
+    commitSetSelectedClasse(this.$store, classe);
+  }
+
   public resetCurrent() {
     if (this.classes.length > 0) {
-      this.current_classe = this.classes[0];
+      commitSetSelectedClasse(this.$store, this.classes[0]);
     } else {
-      this.current_classe = null;
+      commitSetSelectedClasse(this.$store, null);
     }
   }
 
@@ -104,7 +112,7 @@ export default class Classes extends Vue {
 
     const setClasseInterval = setInterval(() => {
       if (!this.current_classe && this.classes && this.classes.length > 0) {
-        this.current_classe = this.classes[0];
+        commitSetSelectedClasse(this.$store, this.classes[0]);
         clearInterval(setClasseInterval);
       }
     }, 100);
