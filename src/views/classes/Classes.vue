@@ -7,7 +7,7 @@
         class="text-center text-uppercase"
         style="letter-spacing: 1px; font-weight: 300"
       >
-        Gestion des sessions
+        Gestion des sessions 
       </h1>
     </v-container>
 
