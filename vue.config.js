@@ -4,7 +4,13 @@ module.exports = {
     electronBuilder: {
       nodeIntegration: true,
       builderOptions: {
-        publish: ['github']
+        publish: ['github'],
+        nsis: {
+          allowElevation: false,
+          allowToChangeInstallationDirectory: true,
+          oneClick: false,
+          perMachine: true
+        }
       }
     },
   },

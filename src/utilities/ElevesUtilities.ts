@@ -5,9 +5,10 @@ export const ElevesUtilities = {
         const notes = classe.evaluations
             .flatMap((evaluation) => evaluation.notes)
             .filter((note) => note.eleve_id === eleve.id)
-            .filter((x) => x.note > 0);
+            .filter((x) => x.note > 0)
+            .map((note) => note.note);
 
-        return notes.map((note) => note.note).reduce((a, b) => a + b) / notes.length;
+        return notes.length > 0 ? notes.reduce((a, b) => a + b) / notes.length : -1;
     },
 
     getOrCreateNotation: (evaluation: IEvaluation, eleve: IEleve, competence_id: string) => {
