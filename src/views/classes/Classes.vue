@@ -74,24 +74,28 @@
             <v-btn
               class="primary rounded-0 mt-2"
               :to="`/bilan/${classes.id}/1er trimestre/4eme`"
+              disabled
             >
               Bilan 1er trimestre
             </v-btn>
             <v-btn
               class="primary rounded-0 mt-2"
               :to="`/bilan/${classes.id}/2eme trimestre/4eme`"
+              disabled
             >
               Bilan 2eme trimestre
             </v-btn>
             <v-btn
               class="primary rounded-0 mt-2"
               :to="`/bilan/${classes.id}/3eme trimestre/4eme`"
+              disabled
             >
               Bilan 3eme trimestre
             </v-btn>
             <v-btn
               class="primary rounded-0 mt-2"
               :to="'/bilan_annuel/' + classes.indexOf(current_classe) + '/4eme'"
+              disabled
             >
               Bilan année
             </v-btn>
@@ -109,24 +113,28 @@
             <v-btn
               class="primary rounded-0 mt-2"
               :to="`/bilan/${classes.id}/1er trimestre/3eme`"
+              disabled
             >
               Bilan 1er trimestre
             </v-btn>
             <v-btn
               class="primary rounded-0 mt-2"
               :to="`/bilan/${classes.id}/2eme trimestre/3eme`"
+              disabled
             >
               Bilan 2eme trimestre
             </v-btn>
             <v-btn
               class="primary rounded-0 mt-2"
               :to="`/bilan/${classes.id}/3eme trimestre/3eme`"
+              disabled
             >
               Bilan 3eme trimestre
             </v-btn>
             <v-btn
               class="primary rounded-0 mt-2"
               :to="`/bilan_annuel/${classes.id}/3eme`"
+              disabled
             >
               Bilan année
             </v-btn>
